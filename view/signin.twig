@@ -1,0 +1,37 @@
+{% extends "masterPage.twig" %}
+ 
+{% block content %}
+
+<section class="bg-title-page p-t-50 p-b-40 flex-col-c-m" style="background-image: url(/assets/images/baniere4.jpg);">
+	<h2 class="l-text2 t-center" style="text-shadow: -1px -1px 0 #ffc0cb, 1px -1px 0 #efefef, -1px 1px 0 #efefef, 1px 1px 0 #efefef;">
+		Connexion
+	</h2>
+</section>
+<div class="container-sign p-t-55 p-b-65">
+
+	<div class="sign-link p-b-15 t-right">
+		<a href="/signup">Vous n'avez pas encore de compte? Inscrivez-vous!</a>
+		
+		<p style="color:red;font-style: oblique">{{message}} </p>
+
+	</div>
+	
+	<form class="form-signin" action='/signin' method="POST" >
+		
+		<label class="control-label"  for="username">Nom d'utilisateur</label>
+		<div class="controls">
+			<input type="text" id="username" name="username" placeholder="" class="-text7 size2 p-l-23 p-r-50"
+				value ="{{post.username}}">
+		</div>
+		<label class="control-label" for="password">Mot de passe</label>
+		<div class="controls">
+			<input type="password" id="password" name="password" placeholder="" class="s-text7 size2 p-l-23 p-r-50" 
+			value ="{{post.password}}">
+		</div>
+
+	<div class="control-label" style="text-align:center;" >
+	<button type="submit">Connexion</button>
+	</div>
+</form>
+</div>
+{% endblock %}

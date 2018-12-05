@@ -1,0 +1,84 @@
+<!-- Footer -->
+	<footer class="bg6 p-t-45 p-b-43 p-l-45 p-r-45">
+		<div class="flex-w p-b-90">
+
+			<div class="p-t-15 p-l-15 p-r-15 respon4" style="margin:auto;">
+				<h4 class="s-text12 p-b-15 t-center">
+					Catégories
+				</h4>
+				<ul class="footer_cat">
+					<li class="p-t-4">
+						<a href="/products?type=all" class="s-text7">Tout</a>
+					</li>
+
+					<li class="p-t-4">
+						<a href="/products?type=Lipstick" class="s-text7">Rouge à lèvres </a>
+					</li>
+
+					<li class="p-t-4">
+						<a href="/products?type=Palettes" class="s-text7">Palettes</a>
+					</li>
+
+					<li class="p-t-4">
+						<a href="/products?type=Foundation" class="s-text7">Fond de teint</a>
+					</li>
+
+					<li class="p-t-4">
+						<a href="/products?type=Highlighter" class="s-text7">Highlighter</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</footer>
+
+
+
+	<!-- Back to top -->
+	<div class="btn-back-to-top bg0-hov" id="myBtn">
+		<span class="symbol-btn-back-to-top">
+			<i class="fa fa-angle-double-up" aria-hidden="true"></i>
+		</span>
+	</div>
+
+	<!-- Container Selection -->
+	<div id="dropDownSelect1"></div>
+	<div id="dropDownSelect2"></div>
+
+
+
+<!--===============================================================================================-->
+	  <script src="/assets/animsition/js/animsition.min.js"></script>
+ 	  <script src="/assets/bootstrap/js/popper.js"></script>
+  	  <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+ 	  <script src="/assets/select2/select2.min.js"></script>
+	  <script src="/assets/slick/slick.min.js"></script>
+  	  <script src="/assets/js/slick-custom.js"></script>
+
+ 	  <script >
+		$(".selection-1").select2({
+			minimumResultsForSearch: 20,
+			dropdownParent: $('#dropDownSelect1')
+		});
+
+		$(".selection-2").select2({
+			minimumResultsForSearch: 20,
+			dropdownParent: $('#dropDownSelect2')
+		});
+	</script>
+<!--===============================================================================================-->
+
+<script>
+	window.onload = function() {
+	var nbcart = '{{ nbcart|e("js")}}';
+	if(!nbcart)
+	{
+		nbcart=0;
+	}
+	document.getElementById("cart-icon").innerHTML = nbcart;
+};
+	
+</script>
+	
+	<script src="/assets/js/main.js"></script>
+
+</html>

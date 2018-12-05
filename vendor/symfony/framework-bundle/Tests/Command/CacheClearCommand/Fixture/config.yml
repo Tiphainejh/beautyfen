@@ -1,0 +1,4 @@
+framework:
+    secret: test
+twig:
+    debug:  true

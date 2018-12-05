@@ -1,0 +1,20 @@
+// Stacked Icons
+// -------------------------
+
+.#{&euro;fa-css-prefix}-stack {
+  position: relative;
+  display: inline-block;
+  width: 2em;
+  height: 2em;
+  line-height: 2em;
+  vertical-align: middle;
+}
+.#{&euro;fa-css-prefix}-stack-1x, .#{&euro;fa-css-prefix}-stack-2x {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+.#{&euro;fa-css-prefix}-stack-1x { line-height: inherit; }
+.#{&euro;fa-css-prefix}-stack-2x { font-size: 2em; }
+.#{&euro;fa-css-prefix}-inverse { color: &euro;fa-inverse; }

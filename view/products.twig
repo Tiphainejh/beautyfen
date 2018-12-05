@@ -1,0 +1,214 @@
+{% extends "masterPage.twig" %}
+
+{% block content %}
+	<section id="page" class="bg-title-page p-t-50 p-b-40 flex-col-c-m" style="background-image: url(/assets/images/baniere.png);">
+		<h2 class="l-text2 t-center" style="text-shadow: -1px -1px 0 #ffc0cb, 1px -1px 0 #efefef, -1px 1px 0 #efefef, 1px 1px 0 #efefef;">
+			{{titre}}
+		</h2>
+		
+		{% if search %}
+			<p class="m-text13b t-center" style="text-shadow: -1px -1px 0 #ffc0cb, 1px -1px 0 #efefef, -1px 1px 0 #efefef, 1px 1px 0 #efefef;">
+			{{search}}
+			</p>
+		{% endif %}	
+	</section>
+<!-- Content page -->
+<section class="bgwhite p-t-55 p-b-65">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-6 col-md-4 col-lg-3 p-b-5">
+				<div class="leftbar p-r-20 p-r-0-sm">
+					<!--  -->
+					<div class="wrap-dropdown-content p-b-20 active-dropdown-content ">
+						<h4 class="js-toggle-dropdown-content  flex-sb-m m-text14 p-b-7">
+							Catégories
+							<i class="down-mark fs-12 color1 fa fa-minus dis-none" aria-hidden="true"></i>
+							<i class="up-mark fs-12 color1 fa fa-plus" aria-hidden="true"></i>
+						</h4>
+	
+						<ul class="filter dropdown-content dis-none"> 
+							<li class="p-t-4"><a href="/products?type=all" class="s-text13 {%if type == 'all'  %} active1 {%endif%}">Tout</a></li>
+							<li class="p-t-4"><a href="/products?type=Lipstick" class="s-text13 {%if type == 'Lipsticks'  %} active1 {%endif%}">Rouges à lèvres</a></li>
+							<li class="p-t-4"><a href="/products?type=Palettes" class="s-text13 {%if type == 'Palettes'  %} active1 {%endif%}">Palettes</a></li>
+							<li class="p-t-4"><a href="/products?type=Foundation" class="s-text13 {%if type == 'Foundation'  %} active1 {%endif%}">Fonds de teint</a></li>
+							<li class="p-t-4"><a href="/products?type=Highlighter" class="s-text13 {%if type == 'Highlighter'  %} active1 {%endif%}">Highlighters</a></li>
+						</ul>
+					</div>
+					<!--  -->
+					<div class="wrap-dropdown-content ">
+					<h4 class="js-toggle-dropdown-content  flex-sb-m m-text14 p-b-7">
+						Filtres
+						<i class="down-mark fs-12 color1 fa fa-minus dis-none" aria-hidden="true"></i>
+						<i class="up-mark fs-12 color1 fa fa-plus" aria-hidden="true"></i>
+					</h4>
+					
+					<div class="dropdown-content dis-none">
+
+					<div class="filter-price">
+						<div class="p-t-4">
+							Prix
+						</div>
+
+						<div class="wra-filter-bar p-t-16">
+							<div id="filter-bar"></div>
+						</div>
+
+						<div class="flex-sb-m flex-w p-t-16">
+							<div class="w-size11">
+								<!-- Button -->
+								<form action="/products">
+									<button class="flex-c-m size4 bg7 bo-rad-15 hov1 s-text14 trans-0-4">
+									Filtrer
+									<input type="hidden" name="minval" value="" id="Min-input">
+									<input type="hidden" name="maxval" value="" id="Max-input">
+									</button>
+								</form>
+							</div>
+
+							<div class="s-text3 p-t-10 p-b-10">
+								<span id="value-lower">610</span>&euro; - <span id="value-upper">980</span>&euro;
+							</div>
+						</div>
+					</div>
+
+					
+					</div> 
+					</div>
+					
+				</div>
+			</div>
+
+			<div class="col-sm-6 col-md-8 col-lg-9 p-b-50">
+				<div class="flex-sb-m flex-w p-b-35">
+				
+				
+					<div class="flex-w">
+						<div class="of-hidden w-size13 m-t-5 m-b-20 m-r-10">
+						<form method="get" class ="form-inline" style="width:100vw" action="/products">
+							<select class="sortform m-r-10 " name="sort">
+								<option value="">Trier</option>
+								<option value="asc">Prix croissant</option>
+								<option value="desc">Prix décroissant</option>
+							</select>
+						<input type="hidden" name="type" value={{type}}>
+						<input type="hidden" name="search" value={{search}}>
+						<button class="buttonvalidate" type="submit" > Valider </button>
+						</form>
+						</div>
+
+					</div>
+					
+					
+					{#	<span class="s-text8 p-t-5 p-b-5">
+						1–<?php  sizeof($product);?> sur <?php sizeof($product);?> résultats
+					</span>#}
+
+					<!-- Product -->
+					<div class="row">
+						{% if products is empty %}
+							Il n'y a aucun produit correspondant à votre recherche.
+						
+						{%else%}
+						
+        				{% for p in products %}
+        				
+							<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
+								<div>
+									<div class="block2-img  of-hidden pos-relative
+									{% if p.sale > 0 %} block2-labelsale
+									{% elseif p.new_product >0 %} block2-labelnew
+									{% endif %} " >
+										<img src="/assets/images/products/{{p.type|lower}}/{{p.type|lower}}{{p.id}}.jpg" class="img-product" alt="IMG-PRODUCT">
+										 
+										<div class="block2-overlay trans-0-4">
+											<div class="block2-btn-addcart w-size1 trans-0-4">
+												<button onclick="submitdata({{p.id}})" class="flex-c-m size25 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
+														Ajouter au panier
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="p-t-20">
+										<a href="/productdetail?id={{p.id}}" class="dis-block s-text3 p-b-5">
+											{{p.name}} &mdash; <strong>{{p.brand}}</strong>
+										</a>
+										{% if p.sale > 0 %}
+												<span class="m-text7 p-r-5">{{p.price}}&euro;</span>
+												<span class="m-text8 p-r-5">{{p.saleprice}}&euro;</span>
+										{% else %}
+												<span class="m-text6 p-r-5">{{p.price}}&euro;</span>
+										{% endif %}
+									</div>
+								</div>
+							</div>
+        				{% endfor %} 
+        				
+        				{%endif%}
+					</div> 
+				</div>
+			</div>
+		</div>
+	</section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+
+function submitdata(val)
+{
+	var user = '{{ user|e("js")}}';
+	 if(user)
+	 {
+	    $.ajax({
+	    	type: 'POST',
+	    	url: "/products",
+	    	data: {id : val},
+	    	success: function(result){
+	  			document.getElementById("page").innerHTML +="<span class =\"addedtocart\" id =\"addedtocart\">Article bien ajouté au panier!</span>";
+	 			document.getElementById("cart-icon").innerHTML = parseInt(document.getElementById("cart-icon").innerText)+1;
+	    	}});
+     }
+ 	 else
+ 	 {
+ 	 	document.getElementById("page").innerHTML +="<span class =\"addedtocart\" id =\"addedtocart\">Connectez-vous pour ajouter des articles à votre panier!</span>";
+ 	 }
+
+		var addedmessage = document.getElementById('addedtocart');
+
+		setTimeout(function() {
+		  addedmessage.remove();
+		}, 5000);
+		
+
+}
+</script>
+
+
+
+<!--===============================================================================================-->
+	  	  <script src="/assets/noui/nouislider.min.js"></script>
+	 	  <script >
+	    var filterBar = document.getElementById('filter-bar');
+		var Min = document.getElementById("Min-input");
+		var Max = document.getElementById("Max-input");
+	    noUiSlider.create(filterBar, {
+	        start: [ 0, 50 ],
+	        connect: true,
+	        range: {
+	            'min': 0,
+	            'max': 70
+	        }
+	    });
+
+	    var skipValues = [
+	    document.getElementById('value-lower'),
+	    document.getElementById('value-upper')
+	    ];
+
+	    filterBar.noUiSlider.on('update', function( values, handle ) {
+	        skipValues[handle].innerHTML = Math.round(values[handle]) ;
+	        Min.value = values[0];
+  			Max.value = values[1];
+	    });
+	</script>
+<!--===============================================================================================-->
+{% endblock %}
+
