@@ -5,7 +5,7 @@
 
 	<!-- Title Page -->
 	<section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(/assets/images/baniere5.jpg);">
-	<h2 class="l-text2 t-center" style="text-shadow: -1px -1px 0 #ffc0cb, 1px -1px 0 #efefef, -1px 1px 0 #efefef, 1px 1px 0 #efefef;">
+	<h2 class="l-text2 t-center" style="text-shadow: -1px -1px 0 #f4a2b0, 1px -1px 0 #efefef, -1px 1px 0 #efefef, 1px 1px 0 #efefef;">
 			Panier
 		</h2>
 	</section>
@@ -13,7 +13,7 @@
 	{% if products %}
 	<!-- Cart -->
 	<section class="cart bgwhite p-t-70 p-b-100">
-		<div class="container">
+		<div class="container" id="container">
 			<!-- Cart item -->
 			<div class="container-table-cart pos-relative">
 				<div class="wrap-table-shopping-cart bgwhite">
@@ -26,7 +26,7 @@
 							<th class="column-5">Total</th>
 						</tr>
 					{%for p in products %}
-						<tr class="table-row">
+						<tr id="row{{p.product.id}}" class="table-row">
 							<td class="column-1">
 								<div class="cart-img-product b-rad-4 o-f-hidden">
 									<img src="/assets/images/products/{{p.product.type|lower}}/{{p.product.type|lower}}{{p.product.id}}.jpg" alt="{{p.name}}">
@@ -36,7 +36,7 @@
 							<td id="value{{p.product.id}}" class="column-3">{{p.product.price}}&euro;</td>
 							<td class="column-4">
 								<div class="flex-w  of-hidden w-size17">
-									<button onclick="removequantity({{p.product.id}})" class="btn-num-product-down color1 flex-c-m size7 bg8 eff2">
+									<button  onclick="removequantity({{p.product.id}})" class="btn-num-product-down color1 flex-c-m size7 bg8 eff2">
 										<i class="fs-12 fa fa-minus" aria-hidden="true"></i>
 									</button>
 
@@ -53,6 +53,33 @@
 					</table>
 				</div>
 			</div>
+
+			<!-- Modal -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">Suppression de l'article</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			     
+			      <div class="modal-body">
+		        	Votre article est sur le point d'être supprimé de votre panier.
+		        	<br> Etes vous sur de votre choix?
+			      </div>
+			      
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+			        <button id="delete" type="button" class="btn btn-primary">Oui, supprimer cet article de mon panier</button>
+			      </div>
+			    
+			    </div>
+			  </div>
+			</div>
+
 
 
 			<!-- Total -->
@@ -100,7 +127,7 @@ function addquantity(val)
 	var value = document.getElementById("value"+val).innerHTML;
 	var new_total = parseFloat(value,10) + parseFloat(total.innerHTML,10);
 	var new_total_cart = parseFloat(value,10) + parseFloat(total_cart.innerHTML,10);
-
+	
 	$.ajax({
 		type: 'POST',
 		url: "/cart",
@@ -126,6 +153,7 @@ function removequantity(val)
 	var new_total = parseFloat(total.innerHTML,10) - parseFloat(value,10);
 	var new_total_cart = parseFloat(total_cart.innerHTML,10) - parseFloat(value,10);
 	
+	//si la quantité de l'article est > 1
 	if(quantity > 1)
 	{
 		$.ajax({
@@ -140,6 +168,47 @@ function removequantity(val)
 				total.innerHTML = new_total+"€";
 			}
 		});
+	}
+	//sinon on le supprime
+	else
+	{
+		$('#myModal').modal('show'); 
+		
+		var del = document.getElementById("delete")
+		var nbcart = '{{ nbcart|e("js")}}';
+
+		del.onclick = function(){
+			$.ajax({
+			type: 'POST',
+			url: "/cart",
+			data: {
+				id : val,
+				method : "delete"		
+			},
+			success: function(result){
+				$('#myModal').modal('hide'); 
+				
+				//si il y a dautres articles dans le panier
+				if(nbcart>1)
+				{
+					var row = document.getElementById("row"+val);
+					row.remove();
+					nbcart--;
+				}
+				
+				//sinon on supprime le panier
+				else
+				{
+					var row = document.getElementById("container");
+					row.innerHTML="<div class=\"sign-link p-b-15 t-center\">Votre panier est vide !</div>";
+				}
+
+			}
+		});
+			
+		};
+
+
 	}
 }
 </script>

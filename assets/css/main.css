@@ -78,7 +78,7 @@ a:focus {
 
 a:hover {
 	text-decoration: none;
-	color: #ffc0cb;
+	color: #f4a2b0;
 }
 
 /* ------------------------------------ */
@@ -107,7 +107,7 @@ position: relative;
 .search-product:hover
 {
   background-color: transparent;
-  border: solid #ffc0cb;
+  border: solid #f4a2b0;
   border-width: 0 1px;
   border-radius: 50px;
 
@@ -128,9 +128,9 @@ position: relative;
 
 .search-product:hover > .search-btn
 {
-  border: solid 1.5px #ffc0cb;
+  border: solid 1.5px #f4a2b0;
   color: white;
-  background-color: #ffc0cb;
+  background-color: #f4a2b0;
     
 }  
 
@@ -169,13 +169,13 @@ position: relative;
 
 .search-product:hover, .search-btn:hover
 {
-  color : #ffc0cb;
+  color : #f4a2b0;
 }
 
 
 .addedtocart
 {
-    background-color: #ffc0cb;
+    background-color: #f4a2b0;
     color: white;
     justify-content: center;
     position: fixed;
@@ -249,7 +249,7 @@ body {
   font-size: 28px;
   font-weight: 400;
   text-transform: uppercase;
-  color: #ffc0cb;
+  color: #f4a2b0;
   background: #fff;
   padding: 10px 5px;
   margin: auto;
@@ -288,7 +288,15 @@ body {
 
 
 /* ------------------------------------ */
+.dialogIsOpen .animsition {
 
+  /* Blur and de-color */
+  -webkit-filter: blur(5px) grayscale(50%);
+
+  /* Recede */
+  -webkit-transform: scale(0.9);
+
+}
 
 .control-label
 {
@@ -309,7 +317,7 @@ input[type=text]:not(.search-txt), input[type=password], input[type=email]  {
 
 .buttonvalidate
 {
-    background-color: #ffc0cb;
+    background-color: #f4a2b0;
     color: white;
     padding-left: 14px;
     padding-right: 14px;
@@ -333,17 +341,53 @@ input[type=text]:not(.search-txt), input[type=password], input[type=email]  {
 {
   outline:none;
 }
+
 button[type=submit]:not(.search-btn):not(.buttonvalidate) {
-    background-color: #ffc0cb;
+    background-color: #f4a2b0;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    
 }
-input:focus{
+
+button[type=submit]:not(.search-btn):not(.buttonvalidate):hover {
+    background-color: #da8c99;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+.btn-primary {
+  color: #fff;
+  background-color: #f4a2b0;
+  border-color: #f4a2b0;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #da8c99;
+  border-color: #da8c99;
+}
+
+.btn-secondary {
+  color: #fff;
+  background-color: black;
+  border-color: black;
+}
+
+.btn-secondary:hover {
+  color: #fff;
+  background-color: #544d4d;
+  border-color: #544d4d;
+}
+
+button:focus, input:focus{
   outline: none;
 }
 
@@ -461,7 +505,7 @@ iframe {
     -o-animation: ball-scale infinite linear .75s;
     animation: ball-scale infinite linear .75s;
     border-radius: 100%;
-    background-color: #ffc0cb;
+    background-color: #f4a2b0;
 }
 
 @-webkit-keyframes ball-scale {
@@ -660,12 +704,12 @@ iframe {
 }
 
 .select2-container .select2-results__option[aria-selected="true"] {
-  background-color: #ffc0cb;
+  background-color: #f4a2b0;
   color: white;
 }
 
 .select2-container .select2-results__option--highlighted[aria-selected] {
-  background-color: #ffc0cb;
+  background-color: #f4a2b0;
   color: white;
 }
 
@@ -924,14 +968,14 @@ iframe {
 }
 
 li.sale-noti > a {
-  color: #ffc0cb;
+  color: #f4a2b0;
 }
 
 .main_menu > li:hover > a {
   text-decoration: none;
   border-bottom: 1px solid #333333;
-  color: #ffc0cb;
-  border-bottom-color:#ffc0cb;
+  color: #f4a2b0;
+  border-bottom-color:#f4a2b0;
 
 
 }
@@ -989,7 +1033,7 @@ li.sale-noti > a {
 }
 
 .sub_menu > li:hover > a {
-  color: #ffc0cb;
+  color: #f4a2b0;
   text-decoration: none;
 }
 
@@ -1112,7 +1156,7 @@ polygon.arrow-top {
   display: block;
   height: 20px;
   width: 1px;
-  background-color: #ffc0cb;
+  background-color: #f4a2b0;
   margin-left: 23px;
   margin-right: 23px;
   margin-top: 5px;
@@ -1122,7 +1166,7 @@ polygon.arrow-top {
   height: 20px;
   width: 1px;
   min-width: 1px;
-  background-color: #ffc0cb;
+  background-color: #f4a2b0;
   display: inline-block;
   position: relative;
   top:7px;
@@ -1163,8 +1207,8 @@ polygon.arrow-top {
 .header-account> div >ul > li > a:hover{
   text-decoration: none;
   border-bottom: 1px solid #333333;
-  color: #ffc0cb;
-  border-bottom-color:#ffc0cb;
+  color: #f4a2b0;
+  border-bottom-color:#f4a2b0;
 
 
 }
@@ -1419,7 +1463,7 @@ polygon.arrow-top {
 .side-menu .main-menu {margin-bottom: 0;}
 
 .item-menu-mobile {
-  background-color: #ffc0cb;
+  background-color: #f4a2b0;
 }
 
 .side-menu .main-menu > li > a {
@@ -1476,7 +1520,7 @@ polygon.arrow-top {
 .side-menu .sub-menu a:hover {
   text-decoration: none;
   padding-left: 20px;
-  color: #ffc0cb !important;
+  color: #f4a2b0 !important;
 }
 
 .side-menu .sub-menu {
@@ -1597,7 +1641,7 @@ polygon.arrow-top {
   .search-product:hover, .search-product
   {
     background-color: transparent;
-    border: solid #ffc0cb;
+    border: solid #f4a2b0;
     border-width: 0 1px;
     border-radius: 50px;
   
@@ -1617,9 +1661,9 @@ polygon.arrow-top {
 
 .search-product > .search-btn
   {
-    border: solid 1.5px #ffc0cb;
+    border: solid 1.5px #f4a2b0;
     color: white;
-    background-color: #ffc0cb;
+    background-color: #f4a2b0;
       
   }  
 }
@@ -1628,7 +1672,7 @@ polygon.arrow-top {
 @media (max-width: 992px){
 .filter{
   width: 100%;
-  background-color: #ffc0cb;
+  background-color: #f4a2b0;
 
   }
   
@@ -1699,7 +1743,7 @@ polygon.arrow-top {
 }
 
 .arrow-slick1:hover {
-  background-color: #ffc0cb;
+  background-color: #f4a2b0;
 }
 
 .next-slick1 {
@@ -1724,7 +1768,7 @@ polygon.arrow-top {
 /* ------------------------------------ */
 .sign-link a
 {
-  color:#ffc0cb;
+  color:#f4a2b0;
 }
 .sign-link a:hover
 {
@@ -1739,7 +1783,7 @@ polygon.arrow-top {
   
     .addedtocart
 {
-    background-color: #ffc0cb;
+    background-color: #f4a2b0;
     color: white;
     justify-content: center;
     position: fixed;
@@ -1759,7 +1803,7 @@ polygon.arrow-top {
 @media (max-width: 768px) {
   .addedtocart
 {
-    background-color: #ffc0cb;
+    background-color: #f4a2b0;
     color: white;
     justify-content: center;
     position: fixed;
@@ -1793,7 +1837,7 @@ polygon.arrow-top {
   }
   .addedtocart
 {
-    background-color: #ffc0cb;
+    background-color: #f4a2b0;
     color: white;
     justify-content: center;
     position: fixed;
@@ -1865,7 +1909,7 @@ polygon.arrow-top {
 }
 
 .panel-order .row {
-	border-bottom: 1px solid #ffc0cb;
+	border-bottom: 1px solid #f4a2b0;
 }
 .panel-order .row:last-child {
 	border: 0px;
@@ -1882,7 +1926,7 @@ polygon.arrow-top {
 	border-bottom: 0;
 }
 .panel-order .row .col-md-11 {
-	border-left: 1px solid #ffc0cb;
+	border-left: 1px solid #f4a2b0;
 }
 .panel-order .row .row .col-md-12 {
 	padding-top: 7px;
@@ -2002,7 +2046,7 @@ polygon.arrow-top {
 }
 
 .swal-button {
-    background-color: #ffc0cb;
+    background-color: #f4a2b0;
     font-family: Montserrat-Regular;
     font-size: 15px;
     color: white;
@@ -2020,7 +2064,7 @@ polygon.arrow-top {
 }
 
 .swal-button:active {
-    background-color: #ffc0cb;
+    background-color: #f4a2b0;
 }
 
 .swal-title {
@@ -2091,7 +2135,7 @@ polygon.arrow-top {
 }
 
 .block2-labelsale::before {
-  background-color: #ffc0cb;
+  background-color: #f4a2b0;
   content: 'Solde';
 }
 
@@ -2350,7 +2394,7 @@ polygon.arrow-top {
 }
 
 .active-pagination, .active-pagination:hover {
-  background-color: #ffc0cb;
+  background-color: #f4a2b0;
   color: white;
 }
 
@@ -2567,7 +2611,7 @@ polygon.arrow-top {
 }
 
 .tag-item:hover {
-  border: 1px solid #ffc0cb;
+  border: 1px solid #f4a2b0;
 }
 
 

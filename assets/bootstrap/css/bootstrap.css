@@ -1989,14 +1989,14 @@ fieldset[disabled] a.btn {
 
 .btn-primary {
   color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #f4a2b0;
+  border-color: #f4a2b0;
 }
 
 .btn-primary:hover {
   color: #fff;
-  background-color: #0069d9;
-  border-color: #0062cc;
+  background-color: #da8c99;
+  border-color: #da8c99;
 }
 
 .btn-primary:focus, .btn-primary.focus {
@@ -2017,14 +2017,14 @@ fieldset[disabled] a.btn {
 
 .btn-secondary {
   color: #fff;
-  background-color: #868e96;
-  border-color: #868e96;
+  background-color: black;
+  border-color: black;
 }
 
 .btn-secondary:hover {
   color: #fff;
-  background-color: #727b84;
-  border-color: #6c757d;
+  background-color: #544d4d;
+  border-color: #544d4d;
 }
 
 .btn-secondary:focus, .btn-secondary.focus {
@@ -4338,7 +4338,7 @@ tbody.collapse.show {
 
 .list-group-item:focus, .list-group-item:hover {
   text-decoration: none;
-  background-color: #ffc0cb;
+  background-color: #f4a2b0;
 }
 
 .list-group-item.disabled, .list-group-item:disabled {
@@ -4349,8 +4349,8 @@ tbody.collapse.show {
 .list-group-item.active {
   z-index: 2;
   color: #fff;
-  background-color: #ffc0cb;
-  border-color: #ffc0cb;
+  background-color: #f4a2b0;
+  border-color: #f4a2b0;
 }
 
 .list-group-flush .list-group-item {

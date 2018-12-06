@@ -162,5 +162,54 @@ class CartController
                     
 
     }
+    
+    public function delete($post)
+    {
+        //regarder si c'est le seul produit, supprimer la commande
+        global $entityManager;
+
+        $productid = intval($post);
+ 
+        $product=$entityManager->getRepository(Product::class)->findOneBy(array('id' => $productid));
+
+        //on cherche la commande en cours
+         $cart = $entityManager
+           ->createQueryBuilder()
+           ->select('o')
+           ->from(' App\Models\Order', 'o')
+           ->where('o.user = :id AND o.status LIKE :status')
+           ->setParameter('id',$_SESSION["user"])
+           ->setParameter('status','%ongoing%')
+           ->getQuery()
+           ->getResult();
+        
+        //on cherche le nombre d'éléments du panier
+        $productscart=$entityManager->getRepository(ProductOrder::class)->findBy(array('order' => $cart));
+        $taille = sizeof($productscart);
+        
+        //on cherche l'article dans le panier
+        $productincart=$entityManager->getRepository(ProductOrder::class)->findOneBy(array('order' => $cart,'product'=>$product));
+
+        // si c'est le seul article du panier on supprime le panier
+        if ($taille==1)
+        {
+
+            $entityManager->remove($productincart);
+            $entityManager->remove($cart[0]);
+        }
+        //sinon on ne supprime que l'article
+        else
+        {
+            //on met à jour le montant total du cart      
+            $price = $product->getPrice();
+            $total_amount = $cart[0]->getTotalAmount() - $price;
+            
+            $cart[0]->setTotalAmount($total_amount);
+            $entityManager->persist($cart[0]);
+            $entityManager->remove($productincart);
+        }
+        
+        $entityManager->flush();
+    }
 
 }
