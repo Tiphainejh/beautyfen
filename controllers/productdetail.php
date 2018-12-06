@@ -1,7 +1,15 @@
 <?php 
-	require_once ("./models/Product.php");
+    session_start();
 
+	require_once ("./models/Product.php");
+	require_once ("./models/ProductOrder.php");
+	require_once ("./models/Order.php");
+	require_once ("./models/User.php");
+	
 	use App\Models\Product as Product;
+	use App\Models\ProductOrder as ProductOrder;
+	use App\Models\User as User;
+	use App\Models\Order as Order;
 
 	
 	global $twig;
@@ -20,6 +28,32 @@ class ProductDetailController {
     public function index($get) {
 
         global $entityManager;
+        $nbcart = 0;
+
+        //verifie si l'utilisateur est bien connecté
+        //verifie si l'utilisateur est bien connecté
+        if($_SESSION["user"]!=NULL)
+        {
+            //affichage du nombre d'éléments du cart
+            $cart = $entityManager
+               ->createQueryBuilder()
+               ->select('o')
+               ->from(' App\Models\Order', 'o')
+               ->where('o.user = :id AND o.status LIKE :status')
+               ->orderBy('o.date_order', 'ASC')
+               ->setParameter('id',$_SESSION["user"])
+               ->setParameter('status','%ongoing%')
+               ->getQuery()
+               ->getResult();
+           
+            if($cart)
+            {
+                $productsincart=$entityManager->getRepository(ProductOrder::class)->findBy(array('order' => $cart));
+                $nbcart = sizeof($productsincart);
+            }
+
+        }
+        
         //recherche d'un produit par son id
         if($get['id'])
         {
@@ -47,7 +81,7 @@ class ProductDetailController {
         }
         
         $template = $this->twig->load("productdetail.twig");
-        echo $template->render(["product"=>$product,"otherproducts"=>$otherproducts]);
+        echo $template->render(["product"=>$product,"otherproducts"=>$otherproducts,"nbcart"=>$nbcart]);
     }
     
 }

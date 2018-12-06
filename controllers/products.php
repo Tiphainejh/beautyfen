@@ -28,7 +28,8 @@ class ProductsController {
     
     public function index($get) {
     global $entityManager;
-    
+    $nbcart = 0;
+
     $cart = $entityManager
        ->createQueryBuilder()
        ->select('o')

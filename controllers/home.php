@@ -29,7 +29,8 @@ class HomeController {
     public function index() {
 
     global $entityManager;
-    
+    $nbcart = 0;
+
     //on récupère les produits les plus commandés
     $productsorder = $entityManager
        ->createQueryBuilder()

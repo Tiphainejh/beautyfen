@@ -32,8 +32,9 @@ class CartController
     public function index()
     {
         global $entityManager;
+        $nbcart = 0;
+
         //on récupère l'utilisateur
-        
          if($_SESSION["user"]==NULL)
         {
             $template = $this->twig->load("signin.twig");

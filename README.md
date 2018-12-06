@@ -1,6 +1,6 @@
 ### Doctrine
-vendor/bin/doctrine orm:schema-tool:update --force
-vendor/bin/doctrine orm:generate:entities
+vendor/bin/doctrine orm:schema-tool:update --force  
+vendor/bin/doctrine orm:generate:entities  
 
 ### TODO
 
@@ -9,3 +9,5 @@ vendor/bin/doctrine orm:generate:entities
 - [ ] Vérifier la version mobile
 - [ ] Taille des produits quand ils sont seuls dans une liste (petits)
 - [ ] Réorganiser le code
+- [ ] Finir de remplir la bdd
+- [ ] Ajouter d'autres images 

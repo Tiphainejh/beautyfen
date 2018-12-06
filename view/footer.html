@@ -69,12 +69,20 @@
 
 <script>
 	window.onload = function() {
+	var header = document.getElementById("account");
+	var icon = document.getElementById("cart-icon");
+	
 	var nbcart = '{{ nbcart|e("js")}}';
-	if(!nbcart)
+	if(nbcart)
 	{
+		header.innerHTML = "<ul><li><a href=\"/signin\">Mon compte</a></li><li><a href=\"/orders\">Mes commandes</a></li><li><a href=\"/logout\">Me déconnecter</a></li></ul>";
+	}
+	else
+	{
+		header.innerHTML = "<ul><li><a href=\"/signin\">Mon compte</a></li><li><a href=\"/orders\">Mes commandes</a></li></ul>";
 		nbcart=0;
 	}
-	document.getElementById("cart-icon").innerHTML = nbcart;
+	icon.innerHTML = nbcart;
 };
 	
 </script>

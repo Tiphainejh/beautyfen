@@ -33,7 +33,10 @@ class InfoController
     
     public function index()
     {
-            global $entityManager;
+        global $entityManager;
+        $nbcart = 0;
+
+        
         //verifie si l'utilisateur est bien connecté
         //verifie si l'utilisateur est bien connecté
         if($_SESSION["user"]!=NULL)
