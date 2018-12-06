@@ -95,10 +95,10 @@
 										{{p.name}} &mdash; <strong>{{p.brand}}</strong>
 									</a>
 									{% if p.sale > 0 %}
-											<span class="m-text7 p-r-5">{{p.price}}&euro;</span>
-											<span class="m-text8 p-r-5">{{p.saleprice}}&euro;</span>
+											<span class="m-text7 p-r-5">{{p.price|number_format(2, ',', ' ')}}&euro;</span>
+											<span class="m-text8 p-r-5">{{p.saleprice|number_format(2, ',', ' ')}}&euro;</span>
 									{% else %}
-											<span class="m-text6 p-r-5">{{p.price}}&euro;</span>
+											<span class="m-text6 p-r-5">{{p.price|number_format(2, ',', ' ')}}&euro;</span>
 									{% endif %}
 								</div>
 							</div>

@@ -111,8 +111,7 @@
 						{%else%}
 						
         				{% for p in products %}
-        				
-							<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
+							<div class="col-sm-12 col-md-6 col-lg-{%if products|length<2%}6{%else%}4{%endif%} p-b-50">
 								<div>
 									<div class="block2-img  of-hidden pos-relative
 									{% if p.sale > 0 %} block2-labelsale
@@ -133,10 +132,11 @@
 											{{p.name}} &mdash; <strong>{{p.brand}}</strong>
 										</a>
 										{% if p.sale > 0 %}
-												<span class="m-text7 p-r-5">{{p.price}}&euro;</span>
-												<span class="m-text8 p-r-5">{{p.saleprice}}&euro;</span>
+												<span class="m-text7 p-r-5">{{p.price|number_format(2, ',', ' ')}}&euro;</span>
+												<span class="m-text8 p-r-5">{%if p.sale_price%}{{p.sale_price|number_format(2, ',', ' ')}}
+																			{%else%}{{p.saleprice|number_format(2, ',', ' ')}}{%endif%}&euro;</span>
 										{% else %}
-												<span class="m-text6 p-r-5">{{p.price}}&euro;</span>
+												<span class="m-text6 p-r-5">{{p.price|number_format(2, ',', ' ')}}&euro;</span>
 										{% endif %}
 									</div>
 								</div>

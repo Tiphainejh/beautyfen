@@ -5,11 +5,12 @@ file_put_contents("log.txt", date("H:i:s")." ".$_POST["id"]." index\n", FILE_APP
 
 ### TODO
 
-- [ ] Résoudre affichage du prix du panier 73.99000000000001
-- [ ] Vérifier la version mobile
-- [ ] Taille des produits quand ils sont seuls dans une liste (petits)
-- [ ] Réorganiser le code
 - [ ] Finir de remplir la bdd
 - [ ] Ajouter d'autres images 
+- [ ] Réorganiser le code
+- [ ] Vérifier la version mobile
+- [x] Gérer le sale_price nottamment pour le cart
+- [x] Taille des produits quand ils sont seuls dans une liste (petits)
+- [x] Résoudre affichage du prix du panier 73.99000000000001
 - [x] Gérer suppression d'un article dans le panier (demande de suppression)
 - [x] Gérer "Me déconnecter" quand utilisateur pas connecté (voir noti panier)

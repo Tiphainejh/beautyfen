@@ -87,16 +87,20 @@ class ProductsController {
 	    //tri des produits correspondant à un mot clef
 	    elseif ($get['sort'])
 	    {
-	    		$products = $entityManager
-	    		->createQueryBuilder()
-		       ->select('p')
-		       ->from(' App\Models\Product', 'p')
-		       ->where('LOWER(p.name) LIKE :name')
-		       ->orwhere('LOWER(p.brand) LIKE :name')
-		       ->orderBy('p.name', $get['sort'])
-		       ->setParameter('name','%'.strtolower($get["search"]).'%')
-		       ->getQuery()
-		       ->getResult();
+	        $sql="  SELECT * 
+                    FROM product 
+                    WHERE LOWER(name) LIKE '%".strtolower($get["search"])."%'
+                    OR LOWER(brand) LIKE '%".strtolower($get["search"])."%'
+                    ORDER BY 
+                        CASE WHEN  `sale` =  '1'
+                        THEN  `sale_price` 
+                        ELSE  `price` 
+                    END ".$get["sort"];
+                    
+            $stmt = $entityManager->getConnection()->prepare($sql);
+            $stmt->execute();
+            $products = $stmt->fetchAll();
+	    	
     	}
     	
        $titre = "Résultats de la recherche : ";
@@ -144,15 +148,18 @@ class ProductsController {
    		//recherche des produits d'un certain type triés dans un certain ordre
    		if($get["type"]!="all" & $get["type"]!=NULL)
    		{
-	   		$products = $entityManager
-		    	->createQueryBuilder()
-		    	->select('p')
-		    	->from(' App\Models\Product', 'p')
-		    	->where('p.type = :type')
-			    ->orderBy('p.price', $get["sort"])
-			    ->setParameter('type',$get["type"])
-			    ->getQuery()
-		    	->getResult();
+   		    $sql="  SELECT * 
+                    FROM product 
+                    WHERE type = '".$get["type"]."' 
+                    ORDER BY 
+                        CASE WHEN  `sale` =  '1'
+                        THEN  `sale_price` 
+                        ELSE  `price` 
+                    END ".$get["sort"];
+                    
+            $stmt = $entityManager->getConnection()->prepare($sql);
+            $stmt->execute();
+            $products = $stmt->fetchAll();
 			
 			$titre = $get["type"];
 		    $type = $get["type"];
@@ -160,15 +167,21 @@ class ProductsController {
    		
    		// recherche de tous les produits triés dans un certain ordre
 		else if($get["type"]=="all" & $get["type"]!=NULL) 
-	   		$products = $entityManager
-		       ->createQueryBuilder()
-		       ->select('p')
-		       ->from(' App\Models\Product', 'p')
-		       ->orderBy('p.price', $get["sort"])
-		       ->getQuery()
-		       ->getResult();
-		   $titre = "Tous nos produits";
-		   $type = "all"; 
+        {
+            $sql="  SELECT * 
+                    FROM product
+                    ORDER BY 
+                        CASE WHEN  `sale` =  '1'
+                        THEN  `sale_price` 
+                        ELSE  `price` 
+                    END ".$get["sort"];
+                    
+            $stmt = $entityManager->getConnection()->prepare($sql);
+            $stmt->execute();
+            $products = $stmt->fetchAll();
+    		$titre = "Tous nos produits";
+    		$type = "all"; 
+        }
    }
    
    // recherche de tous les produits sans filtre
@@ -213,15 +226,15 @@ class ProductsController {
     
             //on regarde s'il y a déjà une commande en cours
              $cart = $entityManager
-           ->createQueryBuilder()
-           ->select('o')
-           ->from(' App\Models\Order', 'o')
-           ->where('o.user = :id AND o.status LIKE :status')
-           ->orderBy('o.date_order', 'ASC')
-           ->setParameter('id',$_SESSION["user"])
-           ->setParameter('status','%ongoing%')
-           ->getQuery()
-           ->getResult();
+               ->createQueryBuilder()
+               ->select('o')
+               ->from(' App\Models\Order', 'o')
+               ->where('o.user = :id AND o.status LIKE :status')
+               ->orderBy('o.date_order', 'ASC')
+               ->setParameter('id',$_SESSION["user"])
+               ->setParameter('status','%ongoing%')
+               ->getQuery()
+               ->getResult();
            
             //si non on en crée une
            if(!$cart)
@@ -229,7 +242,10 @@ class ProductsController {
                 $date = date('m/d/Y');
                 $date_order = new DateTime($date);
                 $status = "ongoing";
-                $amount = $product->getPrice();
+                 if($product->getSale())
+                    $amount = $product->getSalePrice();
+                else
+                    $amount = $product->getPrice();
                 
                 $cart = new Order();
                 $cart->setUser($user);
@@ -252,7 +268,10 @@ class ProductsController {
            else
            {
                 //on met à jour le total du cart
-                $price = $product->getPrice();
+                 if($product->getSale())
+                    $price = $product->getSalePrice();
+                else
+                    $price = $product->getPrice();
                 $total_amount = $price + $cart[0]->getTotalAmount();
                 $cart[0]->setTotalAmount($total_amount);
                 $entityManager->persist($cart[0]);

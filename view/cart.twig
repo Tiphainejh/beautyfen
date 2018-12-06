@@ -26,28 +26,38 @@
 							<th class="column-5">Total</th>
 						</tr>
 					{%for p in products %}
+					
+						{%if p.product.sale%}
+							{% set price = p.product.saleprice %}
+						{%else%}
+							{% set price = p.product.price%}
+						{%endif%}
+					
 						<tr id="row{{p.product.id}}" class="table-row">
+							
 							<td class="column-1">
 								<div class="cart-img-product b-rad-4 o-f-hidden">
 									<img src="/assets/images/products/{{p.product.type|lower}}/{{p.product.type|lower}}{{p.product.id}}.jpg" alt="{{p.name}}">
 								</div>
 							</td>
+							
 							<td class="column-2">{{p.product.name}} &mdash; <strong>{{p.product.brand}}</strong></td>
-							<td id="value{{p.product.id}}" class="column-3">{{p.product.price}}&euro;</td>
+							
+							<td id="value{{p.product.id}}" class="column-3 m-text8">{{price|number_format(2, ',', ' ')}}&euro;</td>
+							
 							<td class="column-4">
 								<div class="flex-w  of-hidden w-size17">
 									<button  onclick="removequantity({{p.product.id}})" class="btn-num-product-down color1 flex-c-m size7 bg8 eff2">
 										<i class="fs-12 fa fa-minus" aria-hidden="true"></i>
 									</button>
-
 									<input id="quantity{{p.product.id}}" class="size8 m-text18 t-center num-product" type="number" name="num-product1" value="{{p.quantity}}">
-
 									<button onclick="addquantity({{p.product.id}})"class="btn-num-product-up color1 flex-c-m size7 bg8 eff2">
 										<i class="fs-12 fa fa-plus" aria-hidden="true"></i>
 									</button>
 								</div>
 							</td>
-							<td id="total{{p.product.id}}" class="column-5">{{p.quantity*p.product.price}}&euro;</td>
+							
+							<td id="total{{p.product.id}}" class="column-5">{{(p.quantity*price)|number_format(2, ',', ' ')}}&euro;</td>
 						</tr>
 					{%endfor%}
 					</table>
@@ -67,8 +77,8 @@
 			      </div>
 			     
 			      <div class="modal-body">
-		        	Votre article est sur le point d'être supprimé de votre panier.
-		        	<br> Etes vous sur de votre choix?
+		        	Vous êtes sur le point de supprimer cet article de votre panier.
+		        	Êtes vous sur de votre choix?
 			      </div>
 			      
 			      <div class="modal-footer">
@@ -94,7 +104,7 @@
 					</span>
 
 					<span id="total_cart" class="m-text21 w-size20 w-full-sm">
-						{{total_amount}}&euro;
+						{{total_amount|number_format(2, ',', ' ')}}&euro;
 					</span>
 				</div>
 
@@ -118,7 +128,7 @@
 	{% endif %}
 	
 <script>
-
+var nbcart = '{{ nbcart|e("js")}}';
 function addquantity(val)
 {
 	 
@@ -145,13 +155,14 @@ function addquantity(val)
 function removequantity(val)
 {
 	 
+	alert(nbcart);
 	var total = document.getElementById("total"+val);
 	var total_cart = document.getElementById("total_cart");
 	var value = document.getElementById("value"+val).innerHTML;
 	var quantity = document.getElementById("quantity"+val).value;
 
-	var new_total = parseFloat(total.innerHTML,10) - parseFloat(value,10);
-	var new_total_cart = parseFloat(total_cart.innerHTML,10) - parseFloat(value,10);
+	var new_total = parseFloat(total.innerHTML,2) - parseFloat(value,2);
+	var new_total_cart = parseFloat(total_cart.innerHTML,2) - parseFloat(value,2);
 	
 	//si la quantité de l'article est > 1
 	if(quantity > 1)
@@ -164,8 +175,8 @@ function removequantity(val)
 				method : "removequantity"		
 			},
 			success: function(result){
-				total_cart.innerHTML = new_total_cart+"€";
-				total.innerHTML = new_total+"€";
+				total_cart.innerHTML = new_total_cart.toFixed(2)+"€";
+				total.innerHTML = new_total.toFixed(2)+"€";
 			}
 		});
 	}
@@ -174,41 +185,39 @@ function removequantity(val)
 	{
 		$('#myModal').modal('show'); 
 		
-		var del = document.getElementById("delete")
-		var nbcart = '{{ nbcart|e("js")}}';
-
-		del.onclick = function(){
-			$.ajax({
-			type: 'POST',
-			url: "/cart",
-			data: {
-				id : val,
-				method : "delete"		
-			},
-			success: function(result){
-				$('#myModal').modal('hide'); 
-				
-				//si il y a dautres articles dans le panier
-				if(nbcart>1)
+		var del = document.getElementById("delete");
+		del.onclick = function()
+		{
+			$.ajax
+			({
+				type: 'POST',
+				url: "/cart",
+				data: {
+					id : val,
+					method : "delete"		
+				},
+				success: function(result)
 				{
-					var row = document.getElementById("row"+val);
-					row.remove();
+					$('#myModal').modal('hide'); 
+					
+					//si il y a dautres articles dans le panier
+					if(nbcart>1)
+					{
+						total_cart.innerHTML = new_total_cart.toFixed(2)+"€";
+						var row = document.getElementById("row"+val);
+						row.remove();
+					}
+					
+					//sinon on supprime le panier
+					else
+					{
+						var row = document.getElementById("container");
+						row.innerHTML="<div class=\"sign-link p-b-15 t-center\">Votre panier est vide !</div>";
+					}
 					nbcart--;
 				}
-				
-				//sinon on supprime le panier
-				else
-				{
-					var row = document.getElementById("container");
-					row.innerHTML="<div class=\"sign-link p-b-15 t-center\">Votre panier est vide !</div>";
-				}
-
-			}
-		});
-			
+			});
 		};
-
-
 	}
 }
 </script>

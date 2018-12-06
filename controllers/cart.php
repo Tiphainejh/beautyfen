@@ -87,10 +87,11 @@ class CartController
         
         $user=$entityManager->getRepository(User::class)->findOneBy(array('id' => $_SESSION["user"]));
         $product=$entityManager->getRepository(Product::class)->findOneBy(array('id' => $productid));
-        ob_flush();
+     /*   ob_flush();
         ob_start();
         var_dump($productid);
-		file_put_contents("log.txt", date("H:i:s")." ".ob_get_flush()." cart\n", FILE_APPEND);
+		file_put_contents("log.txt", date("H:i:s")." ".ob_get_flush()." cart\n", FILE_APPEND);*/
+        
         //on cherche la commande en cours
          $cart = $entityManager
            ->createQueryBuilder()
@@ -103,8 +104,12 @@ class CartController
            ->getQuery()
            ->getResult();
          
-        //on met à jour le montant total du cart      
-        $price = $product->getPrice();
+        //on met à jour le montant total du cart  
+        if($product->getSale())
+            $price = $product->getSalePrice();
+        else
+            $price = $product->getPrice();
+        
         $total_amount = $price + $cart[0]->getTotalAmount();
         $cart[0]->setTotalAmount($total_amount);
         $entityManager->persist($cart[0]);
@@ -144,8 +149,12 @@ class CartController
            ->getQuery()
            ->getResult();
          
-        //on met à jour le montant total du cart      
-        $price = $product->getPrice();
+        //on met à jour le montant total du cart   
+         if($product->getSale())
+            $price = $product->getSalePrice();
+        else
+            $price = $product->getPrice();
+
         $total_amount = $cart[0]->getTotalAmount() - $price;
         $cart[0]->setTotalAmount($total_amount);
         $entityManager->persist($cart[0]);
@@ -200,8 +209,11 @@ class CartController
         //sinon on ne supprime que l'article
         else
         {
-            //on met à jour le montant total du cart      
-            $price = $product->getPrice();
+            //on met à jour le montant total du cart  
+             if($product->getSale())
+                $price = $product->getSalePrice();
+            else
+                $price = $product->getPrice();
             $total_amount = $cart[0]->getTotalAmount() - $price;
             
             $cart[0]->setTotalAmount($total_amount);
