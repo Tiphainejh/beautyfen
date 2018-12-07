@@ -30,6 +30,8 @@
                         <hr>
                     </div>
                 </div>
+                
+                {%if orders%}
                 <div class="panel-order row">
                     <div class="col-md-12">
                         <div class="panel-body">
@@ -68,6 +70,9 @@
                         </div>
                     </div>
                 </div>
+                {%else%}
+                    Vous n'avez pas encore de commande!
+                {%endif%}
             </div>
         </div>
 

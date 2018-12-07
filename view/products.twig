@@ -183,31 +183,31 @@ function submitdata(val)
 
 
 <!--===============================================================================================-->
-	  	  <script src="/assets/noui/nouislider.min.js"></script>
-	 	  <script >
-	    var filterBar = document.getElementById('filter-bar');
-		var Min = document.getElementById("Min-input");
-		var Max = document.getElementById("Max-input");
-	    noUiSlider.create(filterBar, {
-	        start: [ 0, 70 ],
-	        connect: true,
-	        range: {
-	            'min': 0,
-	            'max': 70
-	        }
-	    });
-
-	    var skipValues = [
-	    document.getElementById('value-lower'),
-	    document.getElementById('value-upper')
-	    ];
-
-	    filterBar.noUiSlider.on('update', function( values, handle ) {
-	        skipValues[handle].innerHTML = Math.round(values[handle]) ;
-	        Min.value = values[0];
-  			Max.value = values[1];
-	    });
-	</script>
+<script src="/assets/noui/nouislider.min.js"></script>
+<script >
+	var filterBar = document.getElementById('filter-bar');
+	var Min = document.getElementById("Min-input");
+	var Max = document.getElementById("Max-input");
+	noUiSlider.create(filterBar, {
+	start: [ 0, 70 ],
+	connect: true,
+	range: {
+	    'min': 0,
+	    'max': 70
+	}
+	});
+	
+	var skipValues = [
+	document.getElementById('value-lower'),
+	document.getElementById('value-upper')
+	];
+	
+	filterBar.noUiSlider.on('update', function( values, handle ) {
+	skipValues[handle].innerHTML = Math.round(values[handle]) ;
+	Min.value = values[0];
+	  Max.value = values[1];
+	});
+</script>
 <!--===============================================================================================-->
 {% endblock %}
 

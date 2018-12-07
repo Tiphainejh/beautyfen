@@ -54,6 +54,7 @@ class InfoController
             }
             
             $user=$entityManager->getRepository(User::class)->findOneBy(array('id' => $_SESSION["user"]));
+
             $template = $this->twig->load("info.twig");
             echo $template->render(["user"=>$user,"nbcart"=>$nbcart]);
         }
