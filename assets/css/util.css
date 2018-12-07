@@ -3300,6 +3300,21 @@ TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT
 	line-height: 1.5;
 }
 
+.m-text16b {
+	font-family: Montserrat-Regular;
+	font-size: 24px;
+	color: #222222;
+	line-height: 1.5;
+	text-decoration: line-through;
+}
+
+.m-text16c {
+	font-family: Montserrat-Regular;
+	font-size: 24px;
+	color: #f4a2b0;
+	line-height: 1.5;
+}
+
 .m-text17 {
 	font-family: Montserrat-Bold;
 	font-size: 30px;

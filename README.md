@@ -5,12 +5,15 @@ file_put_contents("log.txt", date("H:i:s")." ".$_POST["id"]." index\n", FILE_APP
 
 ### TODO
 - [ ] setTimeout
-- [ ] cart in signin
-- [ ] sale detail product
+- [ ] cart noti version mobile
 - [ ] Finir de remplir la bdd
 - [ ] Ajouter d'autres images 
 - [ ] Réorganiser le code
 - [ ] Vérifier la version mobile
+- [x] sale detail product
+- [x] taille onglet compte header
+- [x] deconnexion dans / et /home
+- [x] cart noti dans /signin
 - [x] AUTRES PRODUITS QUE VOUS POURRIEZ AIMER lien bdd
 - [x] Gérer le sale_price notamment pour le cart
 - [x] Taille des produits quand ils sont seuls dans une liste (petits)

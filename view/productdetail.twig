@@ -53,9 +53,18 @@
 				{{product.name}} &mdash; <strong>{{product.brand}}</strong>
 				</h4>
 
-				<span class="m-text16 m-r-0 float-right">
-				{{product.price|number_format(2, ',', ' ')}}&euro;
-				</span>
+				{%if product.sale%}
+					<span class="m-text16c m-r-0 float-right">
+						&nbsp;&nbsp;{{product.sale_price|number_format(2, ',', ' ')}}&euro;
+					</span>
+					<span class="m-text16b m-r-0 float-right">
+						 {{product.price|number_format(2, ',', ' ')}}&euro;
+					</span>
+				{%else%}
+					<span class="m-text16 m-r-0 float-right">
+						{{product.price|number_format(2, ',', ' ')}}&euro;
+					</span>
+				{%endif%}
 
 				<p class="s-text8 p-t-40 text-justify">
 				{{product.description|replace({"&eacute;" : "é","&agrave;" : "à", "&rsquo;":"'", })}}

@@ -73,7 +73,10 @@
 	var icon = document.getElementById("cart-icon");
 	
 	var nbcart = '{{ nbcart|e("js")}}';
-	if(nbcart)
+	
+	//affichage du lien déconnexion si l'utilisateur est connecté
+	//(utilisation de nbcart car s'il est défini c'est que l'user est connecté)
+	if(nbcart>1)
 	{
 		header.innerHTML = "<ul><li><a href=\"/signin\">Mon compte</a></li><li><a href=\"/orders\">Mes commandes</a></li><li><a href=\"/logout\">Me déconnecter</a></li></ul>";
 	}
