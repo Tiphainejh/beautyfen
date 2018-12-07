@@ -65,7 +65,7 @@
 	</form>
 </div>
 
-<script onload="setBirth()" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script >
 function checkPass()
 {
@@ -84,29 +84,29 @@ function checkPass()
 		message.innerHTML = "Les mots de passes ne sont pas identiques!"
 	}
 } 
+</script>
 
-function setBirth()
+<script>
+$(function()
 {
-  $('#days').append('<option selected>Jour</option>');
-  $('#months').append('<option selected>Mois</option>');
-  $('#years').append('<option selected>Année</option>');
-  
-  //populate our years select box
-  for (i = new Date().getFullYear()-10; i > 1940; i--)
-  {
-      $('#years').append($('<option />').val(i).html(i));
-  }
-  //populate our months select box
-  for (i = 1; i < 13; i++){
-      $('#months').append($('<option />').val(i).html(i));
-  }
-  
-  for(i=1; i < 31+1 ; i++){
-          $('#days').append($('<option />').val(i).html(i));
-  }
-  
-}
-
+	$('#days').append('<option selected>Jour</option>');
+	$('#months').append('<option selected>Mois</option>');
+	$('#years').append('<option selected>Année</option>');
+	
+    //populate our years select box
+    for (i = new Date().getFullYear()-10; i > 1940; i--)
+    {
+        $('#years').append($('<option />').val(i).html(i));
+    }
+    //populate our months select box
+    for (i = 1; i < 13; i++){
+        $('#months').append($('<option />').val(i).html(i));
+    }
+    
+    for(i=1; i < 31+1 ; i++){
+            $('#days').append($('<option />').val(i).html(i));
+    }
+});
 
 </script> 
 

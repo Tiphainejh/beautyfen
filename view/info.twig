@@ -92,10 +92,10 @@
 	</div>
 
 </div>
-<script onload="setBirth()" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script >
-function setBirth()
+$(function()
 {
   var month = '{{ user.birth|date("m")|e("js")}}';
   var day = '{{ user.birth|date("d")|e("js")}}';
@@ -104,26 +104,25 @@ function setBirth()
   $('#days').append('<option>Jour</option>');
   $('#months').append('<option>Mois</option>');
   $('#years').append('<option>Année</option>');
-  
-  //populate our years select box
-  for (i = new Date().getFullYear()-10; i > 1940; i--)
-  {
-      $('#years').append($('<option />').val(i).html(i));
-  }
-  //populate our months select box
-  for (i = 1; i < 13; i++){
-      $('#months').append($('<option />').val(i).html(i));
-  }
-  
-  for(i=1; i < 31+1 ; i++){
-          $('#days').append($('<option />').val(i).html(i));
-  }
-  
-  $('#years').val(parseInt(year));
+	
+    //populate our years select box
+    for (i = new Date().getFullYear()-10; i > 1940; i--)
+    {
+        $('#years').append($('<option />').val(i).html(i));
+    }
+    //populate our months select box
+    for (i = 1; i < 13; i++){
+        $('#months').append($('<option />').val(i).html(i));
+    }
+    
+    for(i=1; i < 31+1 ; i++){
+            $('#days').append($('<option />').val(i).html(i));
+    }
+      $('#years').val(parseInt(year));
   $('#months').val(parseInt(month));
   $('#days').val(parseInt(day));
   
-}
+});
 
 </script>
 {% endblock %}

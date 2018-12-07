@@ -2,8 +2,10 @@
     session_start();
 
 	require_once ("./models/Order.php");
+	require_once ("./models/User.php");
 
 	use App\Models\Order as Order;
+	use App\Models\User as User;
 
 	global $twig;
 	global $entityManager;

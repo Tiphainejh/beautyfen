@@ -26,7 +26,7 @@ class ProductsController {
 
     }
     
-    public function index()
+    public function index($get)
     {
         global $entityManager;
 

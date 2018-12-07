@@ -121,8 +121,8 @@ position: relative;
 	border:none!important;
 	cursor: auto;
   font-size: 13px;
-  transition-delay:0.4s;
-  transition:0.4s;
+  transition-delay:1s;
+  transition:1s;
   height: 30px;
 }  
 
@@ -138,8 +138,8 @@ position: relative;
 {
 	display: none;
 	cursor: pointer;
-  transition:0.4s;
-  transition-delay:0.4s;  
+  transition:1s;
+  transition-delay:1s;  
 }
 
 .search-btn > i 
@@ -476,6 +476,9 @@ iframe {
 	margin:auto;
 }
 @media (max-width: 576px) {
+  .accountimg{
+    display: none;
+  }
  .container-sign {
 	max-width: 300px;
 }
@@ -1654,8 +1657,8 @@ polygon.arrow-top {
   	color: black;
   	cursor: pointer;
   	font-size: 13px;
-    transition:0.4s;
-    transition-delay:0.4s;
+    transition:1s;
+    transition-delay:1s;
     border:none!important;
   }  
 
@@ -1801,6 +1804,9 @@ polygon.arrow-top {
 }
 
 @media (max-width: 768px) {
+ .accountimg{
+    display: none !important;
+  }
   .addedtocart
 {
     background-color: #f4a2b0;
@@ -2662,7 +2668,9 @@ polygon.arrow-top {
   .tab01 .nav-tabs .nav-item {
     padding: 8px 6px;
   }
-
+.accountimg{
+    display: none;
+  
   .tab01 .nav-tabs {
     margin-right: -6px;
     margin-left: -6px;
