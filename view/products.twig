@@ -29,7 +29,7 @@
 						<ul class="filter dropdown-content dis-none"> 
 							<li class="p-t-4"><a href="/products?type=all" class="s-text13 {%if type == 'all'  %} active1 {%endif%}">Tout</a></li>
 							<li class="p-t-4"><a href="/products?type=Lipstick" class="s-text13 {%if type == 'Lipsticks'  %} active1 {%endif%}">Rouges à lèvres</a></li>
-							<li class="p-t-4"><a href="/products?type=Palettes" class="s-text13 {%if type == 'Palettes'  %} active1 {%endif%}">Palettes</a></li>
+							<li class="p-t-4"><a href="/products?type=Palette" class="s-text13 {%if type == 'Palette'  %} active1 {%endif%}">Palettes</a></li>
 							<li class="p-t-4"><a href="/products?type=Foundation" class="s-text13 {%if type == 'Foundation'  %} active1 {%endif%}">Fonds de teint</a></li>
 							<li class="p-t-4"><a href="/products?type=Highlighter" class="s-text13 {%if type == 'Highlighter'  %} active1 {%endif%}">Highlighters</a></li>
 						</ul>
@@ -83,7 +83,7 @@
 				
 				
 					<div class="flex-w">
-						<div class="of-hidden w-size13 m-t-5 m-b-20 m-r-10">
+						<div class="of-hidden m-t-5 m-b-20 m-r-10">
 						<form method="get" class ="form-inline" style="width:100vw" action="/products">
 							<select class="sortform m-r-10 " name="sort">
 								<option value="">Trier</option>
@@ -112,7 +112,7 @@
 						
         				{% for p in products %}
 							<div class="col-sm-12 col-md-6 col-lg-{%if products|length<2%}6{%else%}4{%endif%} p-b-50">
-								<div>
+								<div class="block2">
 									<div class="block2-img  of-hidden pos-relative
 									{% if p.sale > 0 %} block2-labelsale
 									{% elseif p.new_product >0 %} block2-labelnew
@@ -120,8 +120,8 @@
 										<img src="/assets/images/products/{{p.type|lower}}/{{p.type|lower}}{{p.id}}.jpg" class="img-product" alt="IMG-PRODUCT">
 										 
 										<div class="block2-overlay trans-0-4">
-											<div class="block2-btn-addcart w-size1 trans-0-4">
-												<button onclick="submitdata({{p.id}})" class="flex-c-m size25 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
+											<div class="block2-btn-addcart w-size1">
+												<button onclick="submitdata({{p.id}})" class="size25 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
 														Ajouter au panier
 												</button>
 											</div>
@@ -171,14 +171,13 @@ function submitdata(val)
  	 	document.getElementById("page").innerHTML +="<span class =\"addedtocart\" id =\"addedtocart\">Connectez-vous pour ajouter des articles à votre panier!</span>";
  	 }
 
-		var addedmessage = document.getElementById('addedtocart');
-
-		setTimeout(function() {
-		  addedmessage.remove();
-		}, 5000);
+	setTimeout(function() {
+	  document.getElementById('addedtocart').remove();
+	}, 3000);
 		
 
 }
+
 </script>
 
 
@@ -190,7 +189,7 @@ function submitdata(val)
 		var Min = document.getElementById("Min-input");
 		var Max = document.getElementById("Max-input");
 	    noUiSlider.create(filterBar, {
-	        start: [ 0, 50 ],
+	        start: [ 0, 70 ],
 	        connect: true,
 	        range: {
 	            'min': 0,

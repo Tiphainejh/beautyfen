@@ -198,7 +198,6 @@ class ProductsController {
 	   	$titre = "Tous nos produits";
 		$type = "all"; 
    }
-   
     $template = $this->twig->load("products.twig");
     echo $template->render(["products"=> $products,"titre"=>$titre,"type"=>$type,"search"=>$search,"user"=>$_SESSION['user'],"nbcart"=>$nbcart]);
     }

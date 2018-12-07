@@ -4,12 +4,13 @@ vendor/bin/doctrine orm:generate:entities
 file_put_contents("log.txt", date("H:i:s")." ".$_POST["id"]." index\n", FILE_APPEND);
 
 ### TODO
-- [ ] setTimeout
-- [ ] cart noti version mobile
-- [ ] Finir de remplir la bdd
-- [ ] Ajouter d'autres images 
+- [ ] Ajouter new
 - [ ] Réorganiser le code
 - [ ] Vérifier la version mobile
+- [x] Ajouter d'autres images 
+- [x] Finir de remplir la bdd
+- [x] cart noti version mobile
+- [x] setTimeout
 - [x] sale detail product
 - [x] taille onglet compte header
 - [x] deconnexion dans / et /home

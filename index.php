@@ -23,7 +23,7 @@ try
 		$home = new $classname();
 		 ob_flush();
         ob_start();
-        //var_dump($_POST);
+        //echo $_SERVER['HTTP_USER_AGENT'];
 		file_put_contents("log.txt", date("H:i:s")." ".ob_get_flush()." cart\n", FILE_APPEND);
 		if($_POST)
 		{

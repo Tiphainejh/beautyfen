@@ -190,11 +190,9 @@ function submitdata(val)
  	 	document.getElementById("page").innerHTML +="<span class =\"addedtocart\" id =\"addedtocart\">Connectez-vous pour ajouter des articles à votre panier!</span>";
  	 }
 		
-	var addedmessage = document.getElementById('addedtocart');
-
 	setTimeout(function() {
-	  addedmessage.remove();
-	}, 5000);
+	  document.getElementById('addedtocart').remove();
+	}, 3000);
 
 		
 

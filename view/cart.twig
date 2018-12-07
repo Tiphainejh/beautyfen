@@ -154,6 +154,9 @@ function addquantity(val)
 
 function removequantity(val)
 {
+	var icon = document.getElementById("cart-icon");
+	var iconmobile = document.getElementById("cart-icon-mobile");
+	
 	var total = document.getElementById("total"+val);
 	var total_cart = document.getElementById("total_cart");
 	var value = document.getElementById("value"+val).innerHTML;
@@ -213,6 +216,8 @@ function removequantity(val)
 						row.innerHTML="<div class=\"sign-link p-b-15 t-center\">Votre panier est vide !</div>";
 					}
 					nbcart--;
+					icon.innerHTML = nbcart;
+					iconmobile.innerHTML = nbcart;
 				}
 			});
 		};

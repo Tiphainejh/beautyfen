@@ -2354,7 +2354,7 @@
 /*[ Wrap Picture ]
 -----------------------------------------------------------
 */
-.wrap-pic-w img {width: 100%;}
+.wrap-pic-w img {width: 100%; max-height:90vh;}
 .wrap-pic-max-w img {max-width: 100%;}
 
 /* ------------------------------------ */

@@ -25,9 +25,6 @@ class Product {
     private $sale;
     /** @Column(type="float") **/
     private $sale_price;
-    /** @Column(type="text") **/
-    private $image_path;
-
 
 
     public function __construct()    
@@ -236,27 +233,5 @@ class Product {
         return $this->sale_price;
     }
 
-    /**
-     * Set imagePath.
-     *
-     * @param string $imagePath
-     *
-     * @return Product
-     */
-    public function setImagePath($imagePath)
-    {
-        $this->image_path = $imagePath;
-
-        return $this;
-    }
-
-    /**
-     * Get imagePath.
-     *
-     * @return string
-     */
-    public function getImagePath()
-    {
-        return $this->image_path;
-    }
+ 
 } 
