@@ -209,7 +209,10 @@ class ProductsController {
 
         //file_put_contents("log.txt", var_dump($post)." products\n", FILE_APPEND);
         global $entityManager;
-    
+        if(isset($post['qt']))
+            $quantity = intval($post['qt']);
+        else
+            $quantity = 1;
         $productid = intval($post['id']);
        
         //on récupère l'utilisateur
@@ -243,9 +246,9 @@ class ProductsController {
                 $date_order = new DateTime($date);
                 $status = "ongoing";
                  if($product->getSale())
-                    $amount = $product->getSalePrice();
+                    $amount = $product->getSalePrice() * $quantity;
                 else
-                    $amount = $product->getPrice();
+                    $amount = $product->getPrice() * $quantity;
                 
                 $cart = new Order();
                 $cart->setUser($user);
@@ -255,7 +258,7 @@ class ProductsController {
                 
                 //on cree une table de laison entre le cart et les produits
                 $productcart = new ProductOrder();
-                $productcart->setQuantity(1);
+                $productcart->setQuantity($quantity);
                 $productcart->setProduct($product);
                 $productcart->setOrder($cart);
                 
@@ -269,9 +272,9 @@ class ProductsController {
            {
                 //on met à jour le total du cart
                  if($product->getSale())
-                    $price = $product->getSalePrice();
+                    $price = $product->getSalePrice() * $quantity;
                 else
-                    $price = $product->getPrice();
+                    $price = $product->getPrice() * $quantity;
                 $total_amount = $price + $cart[0]->getTotalAmount();
                 $cart[0]->setTotalAmount($total_amount);
                 $entityManager->persist($cart[0]);
@@ -284,8 +287,8 @@ class ProductsController {
                 if ($productincart)
                 {
                     //on met à jour la quantité de produit dans le cart
-                    $quantity = $productincart->getQuantity() + 1;
-                    $productincart->setQuantity($quantity);
+                    $qt = $productincart->getQuantity() + $quantity;
+                    $productincart->setQuantity($qt);
                     
                     $entityManager->persist($productincart);
                     $entityManager->flush();
@@ -294,7 +297,7 @@ class ProductsController {
                 else
                 {
                     $productcart = new ProductOrder();
-                    $productcart->setQuantity(1);
+                    $productcart->setQuantity($quantity);
                     $productcart->setProduct($product);
                     $productcart->setOrder($cart[0]);
                     $entityManager->persist($productcart);

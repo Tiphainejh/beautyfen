@@ -21,12 +21,11 @@ try
   		require("controllers/".$controller.".php");
 		$classname = ucfirst($controller)."Controller";
 		$home = new $classname();
-		
-		if($_GET)
-		{
-			$home -> index($_GET);		
-		}
-		else if($_POST)
+		 ob_flush();
+        ob_start();
+        //var_dump($_POST);
+		file_put_contents("log.txt", date("H:i:s")." ".ob_get_flush()." cart\n", FILE_APPEND);
+		if($_POST)
 		{
 			//si une méthode est spécifiée dans le post
 			if (isset($_POST["method"]))
@@ -44,10 +43,14 @@ try
 				$home -> addToCart($_POST);
 			}
 		}
+		if($_GET)
+		{
+		//file_put_contents("log.txt", date("H:i:s")." ".$_GET." index\n", FILE_APPEND);
+			$home -> index($_GET);		
+		}
 		else
 		{
 			$home ->index(NULL);
-		file_put_contents("log.txt", date("H:i:s")." ".$_POST["id"]." index\n", FILE_APPEND);
 		}
 	}
 
