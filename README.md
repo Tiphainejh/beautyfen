@@ -4,9 +4,9 @@ vendor/bin/doctrine orm:generate:entities
 file_put_contents("log.txt", date("H:i:s")." ".$_POST["id"]." index\n", FILE_APPEND);
 
 ### TODO
-- [ ] Ajouter new
-- [ ] Réorganiser le code
 - [ ] Vérifier la version mobile
+- [x] Réorganiser le code
+- [x] Ajouter new
 - [x] Ajouter d'autres images 
 - [x] Finir de remplir la bdd
 - [x] cart noti version mobile

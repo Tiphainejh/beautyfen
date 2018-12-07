@@ -9,14 +9,12 @@
 	use App\Models\Product as Product;
 	use App\Models\ProductOrder as ProductOrder;
 	use App\Models\Order as Order;
-
 	
 	global $twig;
 	global $entityManager;
 
 class CartController 
 {
-    
    private $twig;
 
     public function __construct()
@@ -32,18 +30,18 @@ class CartController
     public function index()
     {
         global $entityManager;
-        $nbcart = 0;
 
         //on récupère l'utilisateur
          if($_SESSION["user"]==NULL)
         {
+            //si l'user n'est pas connecté on le redirige vers la page de connexion
             $template = $this->twig->load("signin.twig");
             echo $template->render(["message"=>"Veuillez vous connecter","nbcart"=>0]);
         }
         else
         {
+            $nbcart = 0;
             
-            $user=$entityManager->getRepository(User::class)->findOneBy(array('id' => $_SESSION["user"]));
             $cart = $entityManager
                ->createQueryBuilder()
                ->select('o')
@@ -70,7 +68,6 @@ class CartController
                 
                 $total_amount = $cart[0]->getTotalAmount();
                 $nbcart = sizeof($cartproducts);
-
             }
     
                 $template = $this->twig->load("cart.twig");
@@ -78,22 +75,18 @@ class CartController
         }
     }
     
+    //ajoute 1 unité au produit spécifié
     public function addquantity($post)
     {
         global $entityManager;
 
-
         $productid = intval($post);
         
-        $user=$entityManager->getRepository(User::class)->findOneBy(array('id' => $_SESSION["user"]));
+        //on récupère le produit
         $product=$entityManager->getRepository(Product::class)->findOneBy(array('id' => $productid));
-     /*   ob_flush();
-        ob_start();
-        var_dump($productid);
-		file_put_contents("log.txt", date("H:i:s")." ".ob_get_flush()." cart\n", FILE_APPEND);*/
         
         //on cherche la commande en cours
-         $cart = $entityManager
+        $cart = $entityManager
            ->createQueryBuilder()
            ->select('o')
            ->from(' App\Models\Order', 'o')
@@ -105,6 +98,7 @@ class CartController
            ->getResult();
          
         //on met à jour le montant total du cart  
+        //si le produit est soldé on prend le prix soldé
         if($product->getSale())
             $price = $product->getSalePrice();
         else
@@ -123,18 +117,16 @@ class CartController
         
         $entityManager->persist($productincart);
         $entityManager->flush();
-                    
-
     }
     
+    //retire 1 unité au produit spécifié
     public function removequantity($post)
     {
         global $entityManager;
 
-
         $productid = intval($post);
         
-        $user=$entityManager->getRepository(User::class)->findOneBy(array('id' => $_SESSION["user"]));
+        //on récupère le produit        
         $product=$entityManager->getRepository(Product::class)->findOneBy(array('id' => $productid));
 
         //on cherche la commande en cours
@@ -149,7 +141,8 @@ class CartController
            ->getQuery()
            ->getResult();
          
-        //on met à jour le montant total du cart   
+        //on met à jour le montant total du cart  
+        //si le produit est soldé on prend le prix soldé
          if($product->getSale())
             $price = $product->getSalePrice();
         else
@@ -168,17 +161,16 @@ class CartController
         
         $entityManager->persist($productincart);
         $entityManager->flush();
-                    
-
     }
     
+    //suppression d'un produit du cart et/ou d'un cart
     public function delete($post)
     {
-        //regarder si c'est le seul produit, supprimer la commande
         global $entityManager;
 
         $productid = intval($post);
- 
+        
+        //récupération du produit
         $product=$entityManager->getRepository(Product::class)->findOneBy(array('id' => $productid));
 
         //on cherche la commande en cours
@@ -200,9 +192,9 @@ class CartController
         $productincart=$entityManager->getRepository(ProductOrder::class)->findOneBy(array('order' => $cart,'product'=>$product));
 
         // si c'est le seul article du panier on supprime le panier
+        // on supprime l'article
         if ($taille==1)
         {
-
             $entityManager->remove($productincart);
             $entityManager->remove($cart[0]);
         }
@@ -223,5 +215,4 @@ class CartController
         
         $entityManager->flush();
     }
-
 }

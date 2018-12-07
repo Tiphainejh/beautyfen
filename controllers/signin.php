@@ -33,12 +33,10 @@ class SigninController
     public function index()
     {
         global $entityManager;
-        
-        $nbcart = 0;
 
+        //si l'utilisateur est connecté
         if($_SESSION["user"]!=NULL)
         {
-             //affichage du nombre d'éléments du cart
             $cart = $entityManager
                ->createQueryBuilder()
                ->select('o')
@@ -50,32 +48,31 @@ class SigninController
                ->getQuery()
                ->getResult();
            
+            //récupération du nombre d'éléments du cart
             if($cart)
             {
                 $productsincart=$entityManager->getRepository(ProductOrder::class)->findBy(array('order' => $cart));
                 $nbcart = sizeof($productsincart);
             }
             
-            
             $template = $this->twig->load("account.twig");
             echo $template->render(["nbcart"=>$nbcart]);
         }
-        
         else
         {
             $template = $this->twig->load("signin.twig");
             echo $template->render();
         }
-
     }
 
+    //connexion à un compte utilisateur
     public function register($post)
     {
         global $entityManager;
 
         if($post)
         {   
-            //on verifie que le nom d'utilisateur et l'email ne sont pas déjà présents dans la bdd
+            //on verifie que le nom d'utilisateur soit présents dans la bdd
             $username=$entityManager->getRepository(User::class)->findOneBy(array('username' => $post['username']));
             
             //si le nom d'utilisateur n'existe pas
@@ -87,17 +84,15 @@ class SigninController
             }
             else
             {
-                
-                //recupération du mot de passe 
+                //recupération de l'utilisateur
                 $user = $entityManager
-               ->createQueryBuilder()
-        	       ->select('u')
-        	       ->from(' App\Models\User', 'u')
-        	       ->where('u.username = :username')
-        	       ->setParameter('username',$_POST["username"])
-        	       ->getQuery()
-        	       ->getSingleResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
-               
+                   ->createQueryBuilder()
+                   ->select('u')
+                   ->from(' App\Models\User', 'u')
+                   ->where('u.username = :username')
+                   ->setParameter('username',$_POST["username"])
+                   ->getQuery()
+                   ->getSingleResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
                
                //on vérifie que le mot de passe est correct
                 if (sha1($_POST["password"])!= $user["password"])
@@ -106,7 +101,6 @@ class SigninController
                     $template = $this->twig->load("signin.twig");
                     echo $template->render(["post" => $_POST,"message"=>$message]);
                 }
-                
                 else
                 {
                     $_SESSION["user"] = $user["id"];
@@ -117,6 +111,5 @@ class SigninController
         
         }
     }
-
 }
 ?>

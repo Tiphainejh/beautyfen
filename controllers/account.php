@@ -33,11 +33,11 @@ class AccountController
     public function index()
     {
         global $entityManager;
-        $nbcart = 0;
-        //verifie si l'utilisateur est bien connecté
         //verifie si l'utilisateur est bien connecté
         if($_SESSION["user"]!=NULL)
         {
+            $nbcart = 0;
+            
             //affichage du nombre d'éléments du cart
             $cart = $entityManager
                ->createQueryBuilder()
@@ -59,16 +59,15 @@ class AccountController
             $template = $this->twig->load("account.twig");
             echo $template->render(["nbcart"=>$nbcart]);
         }
-        
+        //si l'utilisateur n'est pas connecté, on le redirige vers la page de connexion
         else
         {
             $template = $this->twig->load("signin.twig");
             echo $template->render();
         }
-
     }
 
-    public function register($post)
+  /*  public function register($post)
     {
         global $entityManager;
 
@@ -84,7 +83,6 @@ class AccountController
         }
         else
         {
-            
             //recupération du mot de passe 
             $user = $entityManager
            ->createQueryBuilder()
@@ -94,7 +92,6 @@ class AccountController
     	       ->setParameter('username',$_POST["username"])
     	       ->getQuery()
     	       ->getSingleResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
-           
            
             if (sha1($_POST["password"])!= $user["password"])
             {
@@ -109,9 +106,8 @@ class AccountController
                 $template = $this->twig->load("account.twig");
                 echo $template->render();
             }    
-        
         }
-    }
-
+    }*/
 }
+
 ?>

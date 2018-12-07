@@ -10,15 +10,12 @@
 	use App\Models\ProductOrder as ProductOrder;
 	use App\Models\User as User;
 	use App\Models\Order as Order;
-
-
 	
 	global $twig;
 	global $entityManager;
 
 class InfoController 
 {
-    
    private $twig;
 
     public function __construct()
@@ -30,17 +27,14 @@ class InfoController
         $this->entityManager = $entityManager;
     }
     
-    
     public function index()
     {
         global $entityManager;
-        $nbcart = 0;
 
-        
-        //verifie si l'utilisateur est bien connecté
         //verifie si l'utilisateur est bien connecté
         if($_SESSION["user"]!=NULL)
         {
+            $nbcart = 0;
             //affichage du nombre d'éléments du cart
             $cart = $entityManager
                ->createQueryBuilder()
@@ -63,7 +57,7 @@ class InfoController
             $template = $this->twig->load("info.twig");
             echo $template->render(["user"=>$user,"nbcart"=>$nbcart]);
         }
-        
+        //si l'utilisateur n'est pas connecté, on le renvoie à la page de connexion
         else
         {
             $template = $this->twig->load("signin.twig");
@@ -71,6 +65,7 @@ class InfoController
         }
     }
     
+    //modifie les données d'un user
     public function modify($post)
     {
         
@@ -78,10 +73,11 @@ class InfoController
         //on récupère l'utilisateur
         $user=$entityManager->getRepository(User::class)->findOneBy(array('id' => $_SESSION["user"]));
         
-       //on verifie si le nom d'utilisateur a été changé quil nexiste pas déjà
+        //si le nom d'utilisateur a été changé, on verifie qu'il n'existe pas déjà
         if ($post["username"] != $user->getUsername())
         {
             $username=$entityManager->getRepository(User::class)->findOneBy(array('username' => $post['username']));
+            
             if($username)
             {
                 $message = "Le nom d'utilisateur ".$post['username']." existe déjà, veuillez en choisir un autre.";
@@ -89,7 +85,8 @@ class InfoController
                 echo $template->render(["message"=>$message,"color"=>"red"]);
             }
         }
-        //on verifie si l'email a été changé quil nexiste pas déjà
+        
+        //si l'email a été changé, on verifie qu'il nexiste pas déjà
         else if($post["email"] != $user->getEmail())
         {
         //var_dump("ok");die();
@@ -102,7 +99,6 @@ class InfoController
                 $template = $this->twig->load("info.twig");
                 echo $template->render(["message"=>$message,"color"=>"red"]);
             }
-           
             else if($email)
             {
                 $message = "L'adresse email ".$post['email']." existe déjà, veuillez en entrer une autre.";
@@ -111,23 +107,21 @@ class InfoController
             }
         }
         
-            $birth1 = strtotime($post['month']."/".$post['day']."/".$post['year']);
-            $birth2 = date('Y-m-d',$birth1);
-            $birth = new DateTime($birth2);
-            
-            $user->setName($post['name']);
-            $user->setUserName($post['username']);
-            $user->setFirstName($post['firstname']);
-            $user->setEmail($post['email']);
-            $user->setBirth($birth);
-
-            $entityManager->persist($user);
-            $entityManager->flush();
-            
-            $message = "Vos informations ont bien été modifiées.";
-            $template = $this->twig->load("info.twig");
-            echo $template->render(["message"=>$message,"color"=>"green","user"=>$user]);
+        $birth1 = strtotime($post['month']."/".$post['day']."/".$post['year']);
+        $birth2 = date('Y-m-d',$birth1);
+        $birth = new DateTime($birth2);
         
-    }
+        $user->setName($post['name']);
+        $user->setUserName($post['username']);
+        $user->setFirstName($post['firstname']);
+        $user->setEmail($post['email']);
+        $user->setBirth($birth);
 
+        $entityManager->persist($user);
+        $entityManager->flush();
+        
+        $message = "Vos informations ont bien été modifiées.";
+        $template = $this->twig->load("info.twig");
+        echo $template->render(["message"=>$message,"color"=>"green","user"=>$user]);
+    }
 }

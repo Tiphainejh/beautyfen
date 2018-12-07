@@ -68,24 +68,24 @@
 <!--===============================================================================================-->
 
 <script>
-	window.onload = function() {
+	window.onload = function()
+{
 	var header = document.getElementById("account");
 	var icon = document.getElementById("cart-icon");
 	var iconmobile = document.getElementById("cart-icon-mobile");
-	
+
 	var nbcart = '{{ nbcart|e("js")}}';
 
 	//affichage du lien déconnexion si l'utilisateur est connecté
 	//(utilisation de nbcart car s'il est défini c'est que l'user est connecté)
-	if(nbcart>=1)
-	{
+	if(nbcart)
 		header.innerHTML = "<ul><li><a href=\"/signin\">Mon compte</a></li><li><a href=\"/orders\">Mes commandes</a></li><li><a href=\"/logout\">Me déconnecter</a></li></ul>";
-	}
 	else
 	{
 		header.innerHTML = "<ul><li><a href=\"/signin\">Mon compte</a></li><li><a href=\"/orders\">Mes commandes</a></li></ul>";
 		nbcart=0;
 	}
+	
 	icon.innerHTML = nbcart;
 	iconmobile.innerHTML = nbcart;
 };

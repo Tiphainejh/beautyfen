@@ -50,7 +50,8 @@
 									<button  onclick="removequantity({{p.product.id}})" class="btn-num-product-down color1 flex-c-m size7 bg8 eff2">
 										<i class="fs-12 fa fa-minus" aria-hidden="true"></i>
 									</button>
-									<input id="quantity{{p.product.id}}" class="size8 m-text18 t-center num-product" type="number" name="num-product1" value="{{p.quantity}}" disabled>
+									<input id="quantity{{p.product.id}}" class="size8 m-text18 t-center num-product" 
+										type="number" name="num-product1" value="{{p.quantity}}" disabled style="background-color: lightgrey;">
 									<button onclick="addquantity({{p.product.id}})"class="btn-num-product-up color1 flex-c-m size7 bg8 eff2">
 										<i class="fs-12 fa fa-plus" aria-hidden="true"></i>
 									</button>
@@ -128,10 +129,10 @@
 	{% endif %}
 	
 <script>
+
 var nbcart = '{{ nbcart|e("js")}}';
 function addquantity(val)
 {
-	 
 	var total = document.getElementById("total"+val);
 	var total_cart = document.getElementById("total_cart");
 	var value = document.getElementById("value"+val).innerHTML;

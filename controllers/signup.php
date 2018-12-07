@@ -1,8 +1,9 @@
 <?php 
-	require_once ("./models/User.php");
     session_start();
+	
+	require_once ("./models/User.php");
+	
 	use App\Models\User as User;
-
 	
 	global $twig;
 	global $entityManager;
@@ -38,27 +39,17 @@ class SignupController
 
     }
 
+    //enregistrement d'un compte utilisateur
     public function register($post)
     {
         global $entityManager;
 
         if($post)
         {   
-            // @TODO : mot de passe
-
             //on verifie que le nom d'utilisateur et l'email ne sont pas déjà présents dans la bdd
             $username=$entityManager->getRepository(User::class)->findOneBy(array('username' => $post['username']));
             $email=$entityManager->getRepository(User::class)->findOneBy(array('email' => $post['email']));
-            
-            /* try
-            {
 
-            } 
-            catch(Exception $e) 
-            {
-                var_dump($e);die();
-            }*/
-            
             //teste si l'adresse mail est valide
             if (!filter_var($post["email"], FILTER_VALIDATE_EMAIL))
             {
@@ -66,7 +57,6 @@ class SignupController
                 $template = $this->twig->load("signup.twig");
                 echo $template->render(["post" => $_POST,"message"=>$message]);
             } 
-           
            
             //si l'addresse mail existe déjà
             else if ($email)
@@ -85,7 +75,6 @@ class SignupController
             }
             else
             {
-                
                 $birth1 = strtotime($post['month']."/".$post['day']."/".$post['year']);
                 $birth2 = date('Y-m-d',$birth1);
                 $birth = new DateTime($birth2);

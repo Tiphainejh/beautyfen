@@ -32,12 +32,12 @@ class PasswordController
     public function index()
     {
         global $entityManager;
-        $nbcart = 0;
 
-        //verifie si l'utilisateur est bien connecté
         //verifie si l'utilisateur est bien connecté
         if($_SESSION["user"]!=NULL)
         {
+            $nbcart = 0;
+            
             //affichage du nombre d'éléments du cart
             $cart = $entityManager
                ->createQueryBuilder()
@@ -59,7 +59,7 @@ class PasswordController
             $template = $this->twig->load("password.twig");
             echo $template->render(["nbcart"=>$nbcart]);
         }
-        
+        //si l'utilisateur n'est pas connecté, on le renvoie à la page de connexion
         else
         {
             $template = $this->twig->load("signin.twig");
@@ -67,15 +67,15 @@ class PasswordController
         }
     }
     
+    //modifie le mot de passe d'un user
     public function modify($post)
     {
-        
         global $entityManager;
 
         //on récupère l'utilisateur
         $user=$entityManager->getRepository(User::class)->findOneBy(array('id' => $_SESSION["user"]));
 
-       //on vérifie que le mot de passe est correct
+        //on vérifie que le mot de passe soit correct
         if (sha1($_POST["old_password"]) != $user->getPassword())
         {
             $message = "Le mot de passe entré est incorrect, veuillez réessayer.";
@@ -92,5 +92,4 @@ class PasswordController
             echo $template->render(["message"=>$message,"color"=>"green"]);
         }
     }
-
 }

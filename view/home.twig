@@ -65,7 +65,7 @@
 	</section>
 
 	<!-- Top Product -->
-	<section  class="newproduct bgwhite p-t-45">
+	<section  class="newproduct bgwhite p-t-45 p-b-25">
 		<div class="container">
 			<div class="sec-title p-b-60">
 				<h3 class="m-text5 t-center"> Vos produits préférés	</h3></div>
@@ -79,7 +79,7 @@
 							<div class="block2">
 								<div class="block2-img  of-hidden pos-relative
 										{% if p.sale > 0 %} block2-labelsale
-										{% elseif p.new_product >0 %} block2-labelnew
+										{% elseif p.newproduct >0 %} block2-labelnew
 										{% endif %} " >
 									<img src="/assets/images/products/{{p.type|lower}}/{{p.type|lower}}{{p.id}}.jpg" class="img-product" alt="IMG-PRODUCT">
 									<div class="block2-overlay trans-0-4">
