@@ -8,9 +8,15 @@ $loader = new Twig_Loader_Filesystem('./view');
 $twig = new Twig_Environment($loader, array('auto_reload' => true));
 
 //expression reguliere de l'url pour récupérer le controller
-preg_match("/([\/])+([a-zA-Z]*)(\/([a-zA-Z]*([\?][a-zA-Z]*[\=][a-zA-Z]*)([\&][a-zA-Z]*[\=][a-zA-Z]*)*\/*)|[\/]*)?/",
-$_SERVER['REQUEST_URI'],$url);
-$controller = $url[2];
+
+$regex  = '/[\/]*([A-Z0-9a-z]+)[\/]*';
+$regex .= '(([A-Z0-9a-z]*)';
+$regex .= '([\?][a-zA-Z]*[\=][a-zA-Z]*';
+$regex .= '([\&][a-zA-Z]*[\=][a-zA-Z]*)*';
+$regex .= '\/*)*|[\/]*)/';
+preg_match($regex, $_SERVER['REQUEST_URI'],$url);
+$controller = $url[1];
+$method = $url[3];
 
 try
 {
@@ -21,14 +27,16 @@ try
   		require("controllers/".$controller.".php");
 		$classname = ucfirst($controller)."Controller";
 		$home = new $classname();
-		 ob_flush();
+		
+		ob_flush();
         ob_start();
         //echo $_SERVER['HTTP_USER_AGENT'];
 		file_put_contents("log.txt", date("H:i:s")." ".ob_get_flush()." cart\n", FILE_APPEND);
+		
 		if($_POST)
 		{
 			//si une méthode est spécifiée dans le post
-			if (isset($_POST["method"]))
+			if (isset($method))
 			{
 				//on appelle la méthode
 				call_user_func(array($home,$_POST["method"]),$_POST["id"]);
@@ -43,9 +51,9 @@ try
 				$home -> addToCart($_POST);
 			}
 		}
+		
 		if($_GET)
 		{
-		//file_put_contents("log.txt", date("H:i:s")." ".$_GET." index\n", FILE_APPEND);
 			$home -> index($_GET);		
 		}
 		else
@@ -54,7 +62,7 @@ try
 		}
 	}
 
-	else if($_SERVER['REQUEST_URI'] =="/")
+	else if($_SERVER['REQUEST_URI'] =="/" || $_SERVER['REQUEST_URI'] =="/index.php")
 	{
 		require("controllers/home.php");
 		$home = new HomeController();

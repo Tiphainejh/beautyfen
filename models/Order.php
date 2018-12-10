@@ -1,7 +1,5 @@
 <?php
 namespace App\Models;
- 
-
 /**
  * @Entity @Table(name="`order`")
  **/
