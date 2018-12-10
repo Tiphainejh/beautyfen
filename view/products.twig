@@ -159,7 +159,7 @@ function submitdata(val)
 	 {
 	    $.ajax({
 	    	type: 'POST',
-	    	url: "/products",
+	    	url: "/products/addToCart",
 	    	data: {id : val},
 	    	success: function(result){
 	  			document.getElementById("page").innerHTML +="<span class =\"addedtocart\" id =\"addedtocart\">Article bien ajouté au panier!</span>";

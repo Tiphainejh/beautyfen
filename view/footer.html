@@ -91,7 +91,104 @@ window.onload = function()
 };
 	
 </script>
+<script>
+
+var nbcart = '{{ nbcart|e("js")}}';
+
+function addquantity(val)
+{
+	var total = document.getElementById("total"+val);
+	var total_cart = document.getElementById("total_cart");
+	var value = document.getElementById("value"+val).innerHTML;
+	var new_total = parseFloat(value,10) + parseFloat(total.innerHTML,10);
+	var new_total_cart = parseFloat(value,10) + parseFloat(total_cart.innerHTML,10);
 	
-	<script src="/assets/js/main.js"></script>
+	$.ajax({
+		type: 'POST',
+		url: "/cart/addQuantity",
+		data: {
+			id : val
+			},
+		success: function(result){
+			total_cart.innerHTML = new_total_cart+"€";
+			total.innerHTML = new_total+"€";
+		}
+	});
+}
+
+function removequantity(val)
+{
+	var icon = document.getElementById("cart-icon");
+	var iconmobile = document.getElementById("cart-icon-mobile");
+	
+	var total = document.getElementById("total"+val);
+	var total_cart = document.getElementById("total_cart");
+	var value = document.getElementById("value"+val).innerHTML;
+	var quantity = document.getElementById("quantity"+val).value;
+
+	var new_total = parseFloat(total.innerHTML,2) - parseFloat(value,2);
+	var new_total_cart = parseFloat(total_cart.innerHTML,2) - parseFloat(value,2);
+	
+	//si la quantité de l'article est > 1
+	if(quantity > 1)
+	{
+		$.ajax({
+			type: 'POST',
+			url: "/cart/removeQuantity",
+			data: {
+				id : val
+			},
+			success: function(result){
+				total_cart.innerHTML = new_total_cart.toFixed(2)+"€";
+				total.innerHTML = new_total.toFixed(2)+"€";
+			}
+		});
+	}
+	//sinon on le supprime
+	else
+	{
+		$('#myModal').modal('show'); 
+		
+		var del = document.getElementById("delete");
+		del.onclick = function()
+		{
+			$.ajax
+			({
+				type: 'POST',
+				url: "/cart/deleteItem",
+				data: {
+					id : val
+				},
+				success: function(result)
+				{
+					$('#myModal').modal('hide'); 
+					
+					//si il y a dautres articles dans le panier
+					if(nbcart>1)
+					{
+						total_cart.innerHTML = new_total_cart.toFixed(2)+"€";
+						var row = document.getElementById("row"+val);
+						row.remove();
+					}
+					
+					//sinon on supprime le panier
+					else
+					{
+						var row = document.getElementById("container");
+						row.innerHTML="<div class=\"sign-link p-b-15 t-center\">Votre panier est vide !</div>";
+					}
+					nbcart--;
+					icon.innerHTML = nbcart;
+					iconmobile.innerHTML = nbcart;
+				}
+			});
+		};
+	}
+}
+
+
+
+</script>
+<script src="/assets/js/main.js"></script>
 
 </html>

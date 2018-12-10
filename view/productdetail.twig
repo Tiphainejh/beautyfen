@@ -175,7 +175,7 @@
 
 <!--===============================================================================================-->
 <script>
- 
+
 
 function submitdata(val)
 {
@@ -191,7 +191,7 @@ function submitdata(val)
 	 {
 	    $.ajax({
 	    	type: 'POST',
-	    	url: "/products",
+	    	url: "/products/addToCart",
 	    	data: {id : val, qt:quantity},
 	    	success: function(result){
 	  			document.getElementById("page").innerHTML +="<span class =\"addedtocart\" id =\"addedtocart\">Article bien ajouté au panier!</span>";

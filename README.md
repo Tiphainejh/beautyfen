@@ -4,8 +4,10 @@ vendor/bin/doctrine orm:generate:entities
 file_put_contents("log.txt", date("H:i:s")." ".$_POST["id"]." index\n", FILE_APPEND);
 
 ### TODO
+- [x] Affichage du header (password)
+- [ ] doule affichage password et info qd submit
 - [ ] Vérifier la version mobile (affichage account
-- [ ] Changer les liens des méthodes, changer les get en post
+- [x] Changer les liens des méthodes
 - [x] Réorganiser le code
 - [x] Ajouter new
 - [x] Ajouter d'autres images 

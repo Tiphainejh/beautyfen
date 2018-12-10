@@ -14,6 +14,7 @@ $regex .= '(([A-Z0-9a-z]*)';
 $regex .= '([\?][a-zA-Z]*[\=][a-zA-Z]*';
 $regex .= '([\&][a-zA-Z]*[\=][a-zA-Z]*)*';
 $regex .= '\/*)*|[\/]*)/';
+
 preg_match($regex, $_SERVER['REQUEST_URI'],$url);
 $controller = $url[1];
 $method = $url[3];
@@ -28,38 +29,21 @@ try
 		$classname = ucfirst($controller)."Controller";
 		$home = new $classname();
 		
-		ob_flush();
+	/*	ob_flush();
         ob_start();
-        //echo $_SERVER['HTTP_USER_AGENT'];
+        var_dump($method);
+        var_dump($_POST);
 		file_put_contents("log.txt", date("H:i:s")." ".ob_get_flush()." cart\n", FILE_APPEND);
+		*/
 		
+		//on appelle la méthode specifiée
 		if($_POST)
-		{
-			//si une méthode est spécifiée dans le post
 			if (isset($method))
-			{
-				//on appelle la méthode
-				call_user_func(array($home,$_POST["method"]),$_POST["id"]);
-			}
-			
-			else if (method_exists($home,"register"))
-				$home->register($_POST);
-			else if (method_exists($home,"modify"))
-				$home -> modify($_POST);
-			else if (method_exists($home,"addToCart"))
-			{
-				$home -> addToCart($_POST);
-			}
-		}
-		
+				call_user_func(array($home,$method),$_POST);
 		if($_GET)
-		{
 			$home -> index($_GET);		
-		}
 		else
-		{
 			$home ->index(NULL);
-		}
 	}
 
 	else if($_SERVER['REQUEST_URI'] =="/" || $_SERVER['REQUEST_URI'] =="/index.php")

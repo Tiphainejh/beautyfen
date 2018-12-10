@@ -11,12 +11,10 @@
 
 	<div class="sign-link p-b-15 t-right">
 		<a href="/signup">Vous n'avez pas encore de compte? Inscrivez-vous!</a>
-		
-		<p style="color:red;font-style: oblique">{{message}} </p>
-
+		<p style="color:red;font-style: oblique">{{message}} </p> {#messages d'erreurs#}
 	</div>
 	
-	<form class="form-signin" action='/signin' method="POST" >
+	<form class="form-signin" action='/signin/connect' method="POST" >
 		
 		<label class="control-label"  for="username">Nom d'utilisateur</label>
 		<div class="controls">

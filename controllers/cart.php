@@ -76,14 +76,12 @@ class CartController
     }
     
     //ajoute 1 unité au produit spécifié
-    public function addquantity($post)
+    public function addQuantity($post)
     {
         global $entityManager;
 
-        $productid = intval($post);
-        
         //on récupère le produit
-        $product=$entityManager->getRepository(Product::class)->findOneBy(array('id' => $productid));
+        $product=$entityManager->getRepository(Product::class)->findOneBy(array('id' => $post['id']));
         
         //on cherche la commande en cours
         $cart = $entityManager
@@ -120,14 +118,12 @@ class CartController
     }
     
     //retire 1 unité au produit spécifié
-    public function removequantity($post)
+    public function removeQuantity($post)
     {
         global $entityManager;
 
-        $productid = intval($post);
-        
         //on récupère le produit        
-        $product=$entityManager->getRepository(Product::class)->findOneBy(array('id' => $productid));
+        $product=$entityManager->getRepository(Product::class)->findOneBy(array('id' => $post['id']));
 
         //on cherche la commande en cours
          $cart = $entityManager
@@ -164,14 +160,12 @@ class CartController
     }
     
     //suppression d'un produit du cart et/ou d'un cart
-    public function delete($post)
+    public function deleteItem($post)
     {
         global $entityManager;
 
-        $productid = intval($post);
-        
         //récupération du produit
-        $product=$entityManager->getRepository(Product::class)->findOneBy(array('id' => $productid));
+        $product=$entityManager->getRepository(Product::class)->findOneBy(array('id' => $post['id']));
 
         //on cherche la commande en cours
          $cart = $entityManager

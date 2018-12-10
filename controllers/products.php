@@ -19,11 +19,10 @@ class ProductsController {
     
     private $twig;
 
-    public function __construct() {
+    public function __construct()
+    {
         global $twig;
-        
         $this->twig = $twig;
-
     }
     
     public function index($get)

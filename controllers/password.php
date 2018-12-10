@@ -74,7 +74,6 @@ class PasswordController
 
         //on récupère l'utilisateur
         $user=$entityManager->getRepository(User::class)->findOneBy(array('id' => $_SESSION["user"]));
-
         //on vérifie que le mot de passe soit correct
         if (sha1($_POST["old_password"]) != $user->getPassword())
         {

@@ -66,7 +66,7 @@ class SigninController
     }
 
     //connexion à un compte utilisateur
-    public function register($post)
+    public function connect($post)
     {
         global $entityManager;
 
