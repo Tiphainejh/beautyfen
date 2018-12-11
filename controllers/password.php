@@ -29,9 +29,20 @@ class PasswordController
     }
     
     
-    public function index()
+    public function index($get)
     {
         global $entityManager;
+        
+        if($get["error"])
+        {
+            $message = "Le mot de passe entré est incorrect, veuillez réessayer.";
+            $color = "red";
+        }
+        if($get["success"])
+        {
+            $message = "Mot de passe modifié avec succès.";
+            $color = "green";
+        }
 
         //verifie si l'utilisateur est bien connecté
         if($_SESSION["user"]!=NULL)
@@ -57,7 +68,7 @@ class PasswordController
             }
     
             $template = $this->twig->load("password.twig");
-            echo $template->render(["nbcart"=>$nbcart]);
+            echo $template->render(["nbcart"=>$nbcart,"message"=>$message,"color"=>$color]);
         }
         //si l'utilisateur n'est pas connecté, on le renvoie à la page de connexion
         else
@@ -74,21 +85,18 @@ class PasswordController
 
         //on récupère l'utilisateur
         $user=$entityManager->getRepository(User::class)->findOneBy(array('id' => $_SESSION["user"]));
+        
         //on vérifie que le mot de passe soit correct
         if (sha1($_POST["old_password"]) != $user->getPassword())
         {
-            $message = "Le mot de passe entré est incorrect, veuillez réessayer.";
-            $template = $this->twig->load("password.twig");
-            echo $template->render(["message"=>$message,"color"=>"red"]);
+            header("Location: /password?error=ok");
         }
         else
         {
             $user->setPassword(sha1($post['password']));
             $entityManager->persist($user);
             $entityManager->flush();
-            $message = "Mot de passe modifié avec succès.";
-            $template = $this->twig->load("password.twig");
-            echo $template->render(["message"=>$message,"color"=>"green"]);
+            header("Location: /password?success=ok");
         }
     }
 }

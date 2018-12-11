@@ -35,7 +35,6 @@ try
         var_dump($_POST);
 		file_put_contents("log.txt", date("H:i:s")." ".ob_get_flush()." cart\n", FILE_APPEND);
 		*/
-		
 		//on appelle la méthode specifiée
 		if($_POST)
 			if (isset($method))

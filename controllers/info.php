@@ -27,10 +27,32 @@ class InfoController
         $this->entityManager = $entityManager;
     }
     
-    public function index()
+    public function index($get)
     {
         global $entityManager;
 
+        if($get["error"]== "u_exists")
+        {
+            $message = "Ce nom d'utilisateur existe déjà, veuillez en entrer un autre.";
+            $color = "red";
+        }
+        else if($get["error"]== "e_exists")
+        {
+            $message = "Cette adresse email existe déjà, veuillez en entrer une autre.";
+            $color = "red";
+        }
+        else if($get["error"]== "invalid")
+        {
+            $message = "Cette adresse email est invalide, veuillez en entrer une autre.";
+            $color = "red";
+        }
+        else if($get["success"])
+        {
+            $message = "Vos informations ont bien été modifiées.";
+            $color = "green";
+        }
+        
+        
         //verifie si l'utilisateur est bien connecté
         if($_SESSION["user"]!=NULL)
         {
@@ -81,9 +103,7 @@ class InfoController
             
             if($username)
             {
-                $message = "Le nom d'utilisateur ".$post['username']." existe déjà, veuillez en choisir un autre.";
-                $template = $this->twig->load("info.twig");
-                echo $template->render(["message"=>$message,"color"=>"red"]);
+                header("Location: /password?error=u_exists");
             }
         }
         
@@ -96,15 +116,11 @@ class InfoController
             //on verifie que l'email est valie
             if (!filter_var($post["email"], FILTER_VALIDATE_EMAIL))
             {
-                $message = "L'adresse email est invalide.";
-                $template = $this->twig->load("info.twig");
-                echo $template->render(["message"=>$message,"color"=>"red"]);
+                header("Location: /password?error=invalid");
             }
             else if($email)
             {
-                $message = "L'adresse email ".$post['email']." existe déjà, veuillez en entrer une autre.";
-                $template = $this->twig->load("info.twig");
-                echo $template->render(["message"=>$message,"color"=>"red"]);
+                header("Location: /password?error=e_exists");
             }
         }
         
@@ -117,12 +133,10 @@ class InfoController
         $user->setFirstName($post['firstname']);
         $user->setEmail($post['email']);
         $user->setBirth($birth);
-
+            
         $entityManager->persist($user);
         $entityManager->flush();
         
-        $message = "Vos informations ont bien été modifiées.";
-        $template = $this->twig->load("info.twig");
-        echo $template->render(["message"=>$message,"color"=>"green","user"=>$user]);
+        header("Location: /info?success=ok");
     }
 }
