@@ -78,7 +78,7 @@ class InfoController
             $user=$entityManager->getRepository(User::class)->findOneBy(array('id' => $_SESSION["user"]));
 
             $template = $this->twig->load("info.twig");
-            echo $template->render(["user"=>$user,"nbcart"=>$nbcart]);
+            echo $template->render(["user"=>$user,"nbcart"=>$nbcart,"message"=>$message,"color"=>$color]);
         }
         //si l'utilisateur n'est pas connecté, on le renvoie à la page de connexion
         else

@@ -4,7 +4,7 @@ vendor/bin/doctrine orm:generate:entities
 file_put_contents("log.txt", date("H:i:s")." ".$_POST["id"]." index\n", FILE_APPEND);
 
 ### TODO
-- [ ] Vérifier la version mobile (affichage account
+- [x] Vérifier la version mobile (affichage account
 - [x] double affichage password et info qd submit
 - [x] Affichage du header (password)
 - [x] Changer les liens des méthodes

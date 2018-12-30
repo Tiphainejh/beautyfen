@@ -99,6 +99,7 @@ ul, li {
 	list-style-type: none;
 }
 
+
 .search-product{
 position: relative;
  padding-left: 10px;
@@ -107,7 +108,7 @@ position: relative;
 .search-product:hover
 {
   background-color: transparent;
-  border: solid #f4a2b0;
+  border: solid #ffc0cb;
   border-width: 0 1px;
   border-radius: 50px;
 
@@ -128,9 +129,9 @@ position: relative;
 
 .search-product:hover > .search-btn
 {
-  border: solid 1.5px #f4a2b0;
+  border: solid 1.5px #ffc0cb;
   color: white;
-  background-color: #f4a2b0;
+  background-color: #ffc0cb;
     
 }  
 
@@ -156,20 +157,31 @@ position: relative;
   background-color: white;
   color: black;
   border: solid 1.3px black;
-
 }  
 
 
-.search-txt:-moz-placeholder {
+.search-txt:-moz-placeholder 
+{
 	color: black;
 }
-.search-txt::-webkit-input-placeholder {
+.search-txt::-webkit-input-placeholder 
+{
 	color: black;
 }
 
 .search-product:hover, .search-btn:hover
 {
-  color : #f4a2b0;
+  color : #ffc0cb;
+}
+
+
+.accountimg
+{
+  background-image:url(/assets/images/account.jpg);
+  height: 80vh;
+  width: 130vh;
+	background-size: 70vw 65vh;
+	background-repeat: no-repeat;
 }
 
 

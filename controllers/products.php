@@ -50,21 +50,42 @@ class ProductsController {
         //filtre les produits dans une certaine tranche de prix
         if($get['minval'])
         {
-        	$products = $entityManager
-           ->createQueryBuilder()
-    	       ->select('p')
-    	       ->from(' App\Models\Product', 'p')
-    	       ->where('p.price > :minval AND p.price < :maxval')
-    	       ->orwhere('p.sale_price > :minval AND p.price < :maxval')
-    	       ->orderBy('p.name', 'ASC')
-    	       ->setParameter('minval',$get['minval'])
-    	       ->setParameter('maxval',$get['maxval'])
-    	       ->getQuery()
-    	       ->getResult();
-           
-           $titre = "Résultats de la recherche : ";
-           $type = "all";
-           $search = $get['search'];
+            if($get['type']!='all')
+        	{
+    		      $products = $entityManager
+    		       ->createQueryBuilder()
+    		       ->select('p')
+    		       ->from(' App\Models\Product', 'p')
+    		       ->where('p.type = :type')
+    		       ->andwhere('p.price > :minval AND p.price < :maxval OR p.sale_price > :minval AND p.price < :maxval')
+    		       ->orderBy('p.name', 'ASC')
+    		       ->setParameter('type',$get["type"])
+    		       ->setParameter('minval',$get['minval'])
+        	       ->setParameter('maxval',$get['maxval'])
+    		       ->getQuery()
+    		       ->getResult();	
+    
+    		       $titre = $get["type"];
+    		       $type = $get["type"];
+        	}
+        	else
+        	{
+            	$products = $entityManager
+               ->createQueryBuilder()
+        	       ->select('p')
+        	       ->from(' App\Models\Product', 'p')
+        	       ->where('p.price > :minval AND p.price < :maxval')
+        	       ->orwhere('p.sale_price > :minval AND p.price < :maxval')
+        	       ->orderBy('p.name', 'ASC')
+        	       ->setParameter('minval',$get['minval'])
+        	       ->setParameter('maxval',$get['maxval'])
+        	       ->getQuery()
+        	       ->getResult();
+               
+               $titre = "Résultats de la recherche : ";
+               $type = "all";
+               $search = $get['search'];
+        	}
         }
         
         //Recherche des produits correspondants à un mot clef
@@ -153,7 +174,7 @@ class ProductsController {
        		//recherche des produits d'un certain type triés dans un certain ordre
        		if($get["type"]!="all" & $get["type"]!=NULL)
        		{
-       		    //même remarque qu'au dessus pour la requetes sql
+       		    //même remarque qu'au dessus pour la requete sql
        		    $sql="  SELECT * 
                         FROM product 
                         WHERE type = '".$get["type"]."' 

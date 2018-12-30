@@ -4,79 +4,83 @@
         Mon compte
     </h2>
 </section>
+
 <div class="container p-t-55 p-b-65">
-<div class="row">
-    <div class="col-md-3 ">
-        <div class="list-group ">
-            <a href="/account" class="list-group-item list-group-item-action">
-            <img src="/assets/images/icons/account.svg" class="account-wrapicon1" alt="ICON"> Aperçu du compte</a>
-            <a href="/orders" class="list-group-item list-group-item-action active">
-            <img src="/assets/images/icons/orders.svg" class="account-wrapicon1 " alt="ICON"> Mes commandes</a>
-            <a href="/info" class="list-group-item list-group-item-action">
-            <img src="/assets/images/icons/infos.svg" class="account-wrapicon1 " alt="ICON"> Mes informations</a>
-            <a href="/password" class="list-group-item list-group-item-action">
-            <img src="/assets/images/icons/password.svg" class="account-wrapicon1 " alt="ICON"> Changer de mot de passe</a>
-            <a href="/logout" class="list-group-item list-group-item-action">
-            <img src="/assets/images/icons/logout.svg" class="account-wrapicon1 " alt="ICON"> D&eacute;connexion
-            </a>
+    <div class="row">
+        
+        <div class="col-md-3 ">
+            <div class="list-group ">
+                <a href="/account" class="list-group-item list-group-item-action">
+                <img src="/assets/images/icons/account.svg" class="account-wrapicon1" alt="ICON"> Aperçu du compte</a>
+                <a href="/orders" class="list-group-item list-group-item-action active">
+                <img src="/assets/images/icons/orders.svg" class="account-wrapicon1 " alt="ICON"> Mes commandes</a>
+                <a href="/info" class="list-group-item list-group-item-action">
+                <img src="/assets/images/icons/infos.svg" class="account-wrapicon1 " alt="ICON"> Mes informations</a>
+                <a href="/password" class="list-group-item list-group-item-action">
+                <img src="/assets/images/icons/password.svg" class="account-wrapicon1 " alt="ICON"> Changer de mot de passe</a>
+                <a href="/logout" class="list-group-item list-group-item-action">
+                <img src="/assets/images/icons/logout.svg" class="account-wrapicon1 " alt="ICON"> D&eacute;connexion
+                </a>
+            </div>
         </div>
-    </div>
-    <div class="col-md-9 m-b-30">
-        <div class="card">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h4>Mes commandes</h4>
-                        <hr>
+        
+        <div class="col-md-9 m-b-30">
+            <div class="card">
+                <div class="card-body">
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>Mes commandes</h4>
+                            <hr>
+                        </div>
                     </div>
-                </div>
-                
-                {%if orders%}
-                <div class="panel-order row">
-                    <div class="col-md-12">
-                        <div class="panel-body">
-                            {%for o in orders%}
-                            
-                            <div class="row">
-                            		{% if o.status == "info" %}
-                            			{% set message = "Commmande terminée!"%}
-                            		{% elseif o.status == "success" %}
-                            			{% set message = "Commmande reçue!"%}
-                            		{% else %}
-                            			{% set message = "Echec de la commande"%}
-                            		{% endif%}
-                                <div class="col-md-1"><img src="/assets/images/products/product{{o.id%44}}.jpg"></div>
-                                <div class="col-md-11">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="pull-right">
-                                                {%if o.status == "ongoing"%}
-                                                    <label class="label label-info">Commande en cours</label>
-                                                {% else %}
-                                                <label class="label label-{{o.status}}">{{message}}</label>
-                                                {%endif%}
+                    
+                    {%if orders%}
+                    <div class="panel-order row">
+                        <div class="col-md-12">
+                            <div class="panel-body">
+                                {%for o in orders%}
+                                
+                                <div class="row">
+                                		{% if o.status == "info" %}
+                                			{% set message = "Commmande terminée!"%}
+                                		{% elseif o.status == "success" %}
+                                			{% set message = "Commmande reçue!"%}
+                                		{% else %}
+                                			{% set message = "Echec de la commande"%}
+                                		{% endif%}
+                                    <div class="col-md-1"><img src="/assets/images/products/product{{o.id%44}}.jpg"></div>
+                                    <div class="col-md-11">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="pull-right">
+                                                    {%if o.status == "ongoing"%}
+                                                        <label class="label label-info">Commande en cours</label>
+                                                    {% else %}
+                                                    <label class="label label-{{o.status}}">{{message}}</label>
+                                                    {%endif%}
+                                                </div>
+                                                <span><strong>&#8470; de commande :</strong></span> {{o.id ~ o.date_order|date("mdY")}}
+                                                <br> Total de la commande : {{o.total_amount}}&euro;
+                                                <br>
                                             </div>
-                                            <span><strong>&#8470; de commande :</strong></span> {{o.id ~ o.date_order|date("mdY")}}
-                                            <br> Total de la commande : {{o.total_amount}}&euro;
-                                            <br>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <span><strong>Date de la commande :</strong></span> le {{o.date_order|date("d/m/Y")}}
+                                            <div class="col-md-12">
+                                                <span><strong>Date de la commande :</strong></span> le {{o.date_order|date("d/m/Y")}}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                {%endfor%}
                             </div>
-                            {%endfor%}
                         </div>
                     </div>
+                    {%else%}
+                        Vous n'avez pas encore de commande!
+                    {%endif%}
                 </div>
-                {%else%}
-                    Vous n'avez pas encore de commande!
-                {%endif%}
             </div>
+    
         </div>
-
     </div>
-</div>
 </div>
 {% endblock %}

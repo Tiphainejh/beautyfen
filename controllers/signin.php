@@ -104,8 +104,7 @@ class SigninController
                 else
                 {
                     $_SESSION["user"] = $user["id"];
-                    $template = $this->twig->load("account.twig");
-                    echo $template->render();
+                    header("Location: /account");
                 }
             }    
         

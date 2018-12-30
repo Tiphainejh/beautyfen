@@ -2,19 +2,82 @@
  
 {% block content %}
 
-<section class="bg-title-page p-t-50 p-b-40 flex-col-c-m" style="background-image: url(/assets/images/baniere4.jpg);">
-	<h2 class="l-text2 t-center" style="text-shadow: -1px -1px 0 #f4a2b0, 1px -1px 0 #efefef, -1px 1px 0 #efefef, 1px 1px 0 #efefef;">
-		Commande validée!
-	</h2>
-</section>
 
-<div class="container-sign p-t-55 p-b-65">
-
-	<div class="sign-link p-b-15 t-left">
-		Votre commande a bien été passée!
-		<br>Vous pouvez dès à présent la retrouver dans la rubrique « Mes commandes » de votre compte.
-
-	</div>
+<div id="invoice">
+    <h1 class="t-center">Commande validée!</h1>
+    <h3 class="t-center">Récapitulatif de votre commande</h3><hr>
 </div>
+    
+<div class="row contacts m-l-40 m-r-40">
+    
+    <div class="col invoice-to t-left">
+        <h3 class="text-gray-light">Informations client:</h3>
+        <div class="to">{{user.name}} {{user.firstname}}</div>
+        <div class="email"><a href="mailto:{{user.email}}">{{user.email}}</a></div>
+    </div>
+    
+    <div class="col invoice-details t-right">
+        <h3 class="invoice-id">Commande &#8470; {{cart.id ~ cart.date_order|date("mdY")}}</h3>
+        <div class="date">Date de la commande: {{cart.date_order|date("d/m/Y")}}</div>
+    </div>
+    
+</div>
+
+<section class="cart bgwhite p-t-35 p-b-50">
+	<div class="container" id="container">
+		<!-- Cart items -->
+		
+		<div class="container-table-cart pos-relative">
+			<div class="wrap-table-shopping-cart bgwhite">
+				<table class="table-shopping-cart" >
+					<tr class="table-head">
+						<th class="column-1"></th>
+						<th class="column-2">Produit</th>
+						<th class="column-3">Prix</th>
+						<th class="column-4">Quantité</th>
+						<th class="column-5">Total</th>
+					</tr>
+				{%for p in products %}
+					{%if p.product.sale%}
+						{% set price = p.product.saleprice %}
+					{%else%}
+						{% set price = p.product.price%}
+					{%endif%}
+				
+					<tr id="row{{p.product.id}}" class="table-row">
+		
+						<td class="column-1">
+							<div class="cart-img-product b-rad-4 o-f-hidden">
+								<img src="/assets/images/products/{{p.product.type|lower}}/{{p.product.type|lower}}{{p.product.id}}.jpg" alt="{{p.name}}">
+							</div>
+						</td>
+						
+						<td class="column-2">{{p.product.name}} &mdash; <strong>{{p.product.brand}}</strong></td>
+						<td id="value{{p.product.id}}" class="column-3 m-text8">{{price|number_format(2, ',', ' ')}}&euro;</td>
+						<td class="column-4">{{p.quantity}}</td>
+						<td id="total{{p.product.id}}" class="column-5">{{(p.quantity*price)|number_format(2, ',', ' ')}}&euro;</td>
+					
+					</tr>
+				{%endfor%}
+					
+					<tr class="table-row">
+						<td class="column-1"></td>
+						<td class="column-2"><h3><strong>Total de la commande</h3></strong></td>
+						<td class="column-3"></td>
+						<td class="column-4"></td>
+						<td class="column-5"><h3><strong>{{cart.totalamount|number_format(2, ',', ' ')}}&euro;</strong></h3></td>
+					</tr>
+					
+				</table>
+			</div>
+		</div>
+		
+		<div class="t-left m-t-30">
+		Merci pour votre commande!<br>
+		Vous pouvez dès à présent la retrouver dans la rubrique <a href="/orders">« Mes commandes »</a> de votre compte.
+		</div>
+		
+	</div>
+</section>
 
 {% endblock %}

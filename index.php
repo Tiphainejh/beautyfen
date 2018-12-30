@@ -7,8 +7,7 @@ require_once "bootstrap.php";
 $loader = new Twig_Loader_Filesystem('./view');
 $twig = new Twig_Environment($loader, array('auto_reload' => true));
 
-//expression reguliere de l'url pour récupérer le controller
-
+//expression reguliere de l'url pour récupérer le controller et la méthode appelée
 $regex  = '/[\/]*([A-Z0-9a-z]+)[\/]*';
 $regex .= '(([A-Z0-9a-z]*)';
 $regex .= '([\?][a-zA-Z]*[\=][a-zA-Z]*';
@@ -23,18 +22,11 @@ try
 {
 	if (is_file("controllers/".$controller.".php"))
 	{
-
 		//appel de la classe du controller
   		require("controllers/".$controller.".php");
 		$classname = ucfirst($controller)."Controller";
 		$home = new $classname();
 		
-	/*	ob_flush();
-        ob_start();
-        var_dump($method);
-        var_dump($_POST);
-		file_put_contents("log.txt", date("H:i:s")." ".ob_get_flush()." cart\n", FILE_APPEND);
-		*/
 		//on appelle la méthode specifiée
 		if($_POST)
 			if (isset($method))

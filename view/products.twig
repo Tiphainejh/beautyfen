@@ -1,24 +1,26 @@
 {% extends "masterPage.twig" %}
 
 {% block content %}
-	<section id="page" class="bg-title-page p-t-50 p-b-40 flex-col-c-m" style="background-image: url(/assets/images/baniere.png);">
-		<h2 class="l-text2 t-center" style="text-shadow: -1px -1px 0 #f4a2b0, 1px -1px 0 #efefef, -1px 1px 0 #efefef, 1px 1px 0 #efefef;">
-			{{titre}}
-		</h2>
-		
-		{% if search %}
-			<p class="m-text13b t-center" style="text-shadow: -1px -1px 0 #f4a2b0, 1px -1px 0 #efefef, -1px 1px 0 #efefef, 1px 1px 0 #efefef;">
-			{{search}}
-			</p>
-		{% endif %}	
-	</section>
-<!-- Content page -->
+
+<section id="page" class="bg-title-page p-t-50 p-b-40 flex-col-c-m" style="background-image: url(/assets/images/baniere.png);">
+	<h2 class="l-text2 t-center" style="text-shadow: -1px -1px 0 #f4a2b0, 1px -1px 0 #efefef, -1px 1px 0 #efefef, 1px 1px 0 #efefef;">
+		{{titre}}
+	</h2>
+	
+	{% if search %}
+		<p class="m-text13b t-center" style="text-shadow: -1px -1px 0 #f4a2b0, 1px -1px 0 #efefef, -1px 1px 0 #efefef, 1px 1px 0 #efefef;">
+		{{search}}
+		</p>
+	{% endif %}	
+</section>
+	
 <section class="bgwhite p-t-55 p-b-65">
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-6 col-md-4 col-lg-3 p-b-5">
 				<div class="leftbar p-r-20 p-r-0-sm">
-					<!--  -->
+
+
 					<div class="wrap-dropdown-content p-b-20 active-dropdown-content ">
 						<h4 class="js-toggle-dropdown-content  flex-sb-m m-text14 p-b-7">
 							Catégories
@@ -34,45 +36,43 @@
 							<li class="p-t-4"><a href="/products?type=Highlighter" class="s-text13 {%if type == 'Highlighter'  %} active1 {%endif%}">Highlighters</a></li>
 						</ul>
 					</div>
-					<!--  -->
-					<div class="wrap-dropdown-content ">
-					<h4 class="js-toggle-dropdown-content  flex-sb-m m-text14 p-b-7">
-						Filtres
-						<i class="down-mark fs-12 color1 fa fa-minus dis-none" aria-hidden="true"></i>
-						<i class="up-mark fs-12 color1 fa fa-plus" aria-hidden="true"></i>
-					</h4>
-					
-					<div class="dropdown-content dis-none">
 
-					<div class="filter-price">
-						<div class="p-t-4">
-							Prix
-						</div>
-
-						<div class="wra-filter-bar p-t-16">
-							<div id="filter-bar"></div>
-						</div>
-
-						<div class="flex-sb-m flex-w p-t-16">
-							<div class="w-size11">
-								<!-- Button -->
-								<form action="/products">
-									<button class="flex-c-m size4 bg7 bo-rad-15 hov1 s-text14 trans-0-4">
-									Filtrer
-									<input type="hidden" name="minval" value="" id="Min-input">
-									<input type="hidden" name="maxval" value="" id="Max-input">
-									</button>
-								</form>
+					<div class="wrap-dropdown-content">
+						<h4 class="js-toggle-dropdown-content  flex-sb-m m-text14 p-b-7">
+							Filtres
+							<i class="down-mark fs-12 color1 fa fa-minus dis-none" aria-hidden="true"></i>
+							<i class="up-mark fs-12 color1 fa fa-plus" aria-hidden="true"></i>
+						</h4>
+						
+						<div class="dropdown-content dis-none">
+	
+							<div class="filter-price">
+								<div class="p-t-4">Prix</div>
+		
+								<div class="wra-filter-bar p-t-16">
+									<div id="filter-bar"></div>
+								</div>
+		
+								<div class="flex-sb-m flex-w p-t-16">
+									<div class="w-size11">
+										<!-- Button -->
+										<form action="/products">
+											<button class="flex-c-m size4 bg7 bo-rad-15 hov1 s-text14 trans-0-4">
+											Filtrer
+											<input type="hidden" name="type" value={{type}}>
+											<input type="hidden" name="minval" value="" id="Min-input">
+											<input type="hidden" name="maxval" value="" id="Max-input">
+											</button>
+										</form>
+									</div>
+		
+									<div class="s-text3 p-t-10 p-b-10">
+										<span id="value-lower">610</span>&euro; - <span id="value-upper">980</span>&euro;
+									</div>
+								</div>
+								
 							</div>
-
-							<div class="s-text3 p-t-10 p-b-10">
-								<span id="value-lower">610</span>&euro; - <span id="value-upper">980</span>&euro;
-							</div>
-						</div>
-					</div>
-
-					
-					</div> 
+						</div> 
 					</div>
 					
 				</div>
@@ -107,7 +107,6 @@
 					<div class="row">
 						{% if products is empty %}
 							Il n'y a aucun produit correspondant à votre recherche.
-						
 						{%else%}
 						
         				{% for p in products %}
@@ -205,8 +204,8 @@ function submitdata(val)
 	filterBar.noUiSlider.on('update', function( values, handle ) {
 	skipValues[handle].innerHTML = Math.round(values[handle]) ;
 	Min.value = values[0];
-	  Max.value = values[1];
-	});
+	Max.value = values[1];
+});
 </script>
 <!--===============================================================================================-->
 {% endblock %}

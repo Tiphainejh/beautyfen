@@ -1,11 +1,15 @@
 <?php 
     session_start();
-
-	require_once ("./models/Order.php");
+	
 	require_once ("./models/User.php");
-
-	use App\Models\Order as Order;
+	require_once ("./models/Product.php");
+	require_once ("./models/Order.php");
+	require_once ("./models/ProductOrder.php");
+	
 	use App\Models\User as User;
+	use App\Models\Product as Product;
+	use App\Models\ProductOrder as ProductOrder;
+	use App\Models\Order as Order;
 
 	global $twig;
 	global $entityManager;
@@ -20,11 +24,12 @@ class OrderpaidController {
         $this->twig = $twig;
     }
     
-    public function index()
+    public function index($get)
     {
         global $entityManager;
         
-        //la commande est validée, on passe son statut à "success"
+        $user=$entityManager->getRepository(User::class)->findOneBy(array('id' => $_SESSION['user']));
+        
         $cart = $entityManager
            ->createQueryBuilder()
            ->select('o')
@@ -35,14 +40,24 @@ class OrderpaidController {
            ->setParameter('status','%ongoing%')
            ->getQuery()
            ->getResult();
-       
-        $cart[0]->setStatus("success");
         
+        //on recupère les produits du panier pour les afficher sur le récap
+        $cartproducts = $entityManager
+           ->createQueryBuilder()
+           ->select('p')
+           ->from(' App\Models\ProductOrder', 'p')
+           ->where('p.order = :cart')
+           ->setParameter('cart',$cart)
+           ->getQuery()
+           ->getResult();
+        
+        //la commande est validée, on passe son statut à "success"
+        $cart[0]->setStatus("success");
         $entityManager->persist($cart[0]);
         $entityManager->flush();
         
         $template = $this->twig->load("orderpaid.twig");
-        echo $template->render(["nbcart"=>0]);
+        echo $template->render(["cart"=>$cart[0],"products"=>$cartproducts,"user"=>$user,"nbcart"=>0]);
     }
 }
 
