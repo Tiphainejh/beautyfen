@@ -1,0 +1,15 @@
+Options +FollowSymLinks
+RewriteEngine On
+RewriteCond %{REQUEST_URI} !=/index.php
+RewriteCond %{REQUEST_URI} !.*\.png$
+RewriteCond %{REQUEST_URI} !.*\.jpg$
+RewriteCond %{REQUEST_URI} !.*\.png$
+RewriteCond %{REQUEST_URI} !.*\.svg$
+RewriteCond %{REQUEST_URI} !.*\.css$
+RewriteCond %{REQUEST_URI} !.*\.js$
+RewriteCond %{REQUEST_URI} !.*\.eot$
+RewriteCond %{REQUEST_URI} !.*\.ttf$
+RewriteCond %{REQUEST_URI} !.*\.woff$
+RewriteCond %{REQUEST_URI} !.*\.woff2
+RewriteCond %{REQUEST_URI} !.*\.otf$
+RewriteRule .* /index.php
